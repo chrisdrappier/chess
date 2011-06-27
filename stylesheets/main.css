@@ -1,0 +1,25 @@
+#board td {
+	height : 100px;
+	width : 100px;
+	margin: 0;
+	padding: 0;
+}
+
+#board tr {
+	margin: 0;
+	padding: 0;
+}
+
+#board td.dark {
+	background-color : black;
+	background-image : url(../images/knight.png);
+}
+#board td.light {
+	background-color : white;
+	background-image : url(../images/knight.png);
+	
+}
+
+#board td.outer{
+	text-align: center;
+}

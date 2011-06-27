@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link href="stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<table id="board"></table>
+		<script type="text/javascript">
+			function Board() {
+				this.ranks = 10;
+				this.files = 10;
+				this.squares = new Array();
+			}
+			Board.prototype.drawBoard = function() {
+				txt = "";
+				for (rank=this.ranks; rank > 0; rank--){
+					txt += "<tr id=\"" + rank  + "\">" ;
+					for (file=0; file < this.files; file++){
+						var cellType = (rank + file) % 2 == 0 ? "light" : "dark";
+						var letters = new Array("A","B","C","D","E","F","G","H");
+						var letter = letters[file -1];
+						var cell = (rank -1) + letter;
+						this.squares.push(new  Square(cell));
+						var outerColumn = (rank == 1 || rank == 10);
+						var outerRow = (file == 0 || file == 9);
+						var outer = (outerColumn || outerRow);
+						var tdClass;
+						if (outer){
+							tdClass = "outer";
+						} else {
+							tdClass = cellType;
+						}
+						var tdClass = outer ? "outer" : cellType;
+						var content = (outerColumn && !outerRow) ? letter : (outerRow && !outerColumn) ? rank -1: "";
+						txt += "<td class=\"" + tdClass + "\" id=\"" +  cell + "\">"+ content +"</td>";
+					}
+					txt += "</tr>"; 
+				}
+				return txt;
+			}
+			Board.prototype.newGame = function(){
+				
+			}
+			
+			function Square(position){
+				this.position = position;
+			}
+			
+			function Piece(square){
+				this.square = square;
+			}
+			Piece.prototype.move = function(square){
+				this.square = square;
+			}
+			function Bishop(){
+			}
+			Bishop.prototype = new Piece();
+			Bishop.prototype.constructor=Bishop;
+			Bishop.prototype.parent = Piece.prototype;
+			function Knight(){
+			}
+			Knight.prototype = new Piece();
+			Knight.prototype.constructor=Knight;
+			Knight.prototype.parent = Piece.prototype;
+			function Rook(){
+			}
+			Rook.prototype = new Piece();
+			Rook.prototype.constructor=Rook;
+			Rook.prototype.parent = Rook.prototype;
+			function Pawn(){
+			}
+			Pawn.prototype = new Piece();
+			Pawn.prototype.constructor=Pawn;
+			Pawn.prototype.parent = Piece.prototype;
+			function Queen(){
+			}
+			Queen.prototype = new Piece();
+			Queen.prototype.constructor=Queen;
+			Queen.prototype.parent = Piece.prototype;
+			function King(){
+			}
+			King.prototype = new Piece();
+			King.prototype.constructor=King;
+			King.prototype.parent = Piece.prototype;
+			var board = new Board();
+			document.getElementById("board").innerHTML=board.drawBoard();
+		</script>
+	</body>
+</html>
