@@ -7,83 +7,72 @@
 		<table id="board"></table>
 		<script type="text/javascript">
 			function Board() {
-				this.ranks = 10;
-				this.files = 10;
 				this.squares = new Array();
 			}
-			Board.prototype.drawBoard = function() {
-				txt = "";
-				for (rank=this.ranks; rank > 0; rank--){
-					txt += "<tr id=\"" + rank  + "\">" ;
-					for (file=0; file < this.files; file++){
+			Board.drawBoard = function() {
+				var board = new Board();
+				var txt = "";
+				var letters = new Array("A","B","C","D","E","F","G","H");
+				var ranks = 10;
+				var files = 10;
+				for (rank=ranks; rank > 0; rank--){
+					txt += "<tr id=\"" + (rank -1)  + "\">" ;
+					for (file=0; file < files; file++){
 						var cellType = (rank + file) % 2 == 0 ? "light" : "dark";
-						var letters = new Array("A","B","C","D","E","F","G","H");
 						var letter = letters[file -1];
 						var cell = (rank -1) + letter;
-						this.squares.push(new  Square(cell));
 						var outerColumn = (rank == 1 || rank == 10);
 						var outerRow = (file == 0 || file == 9);
 						var outer = (outerColumn || outerRow);
-						var tdClass;
+						var tdClass = outer ? "outer" : cellType;
+						var content = ""
 						if (outer){
 							tdClass = "outer";
 						} else {
+							bRank = rank -1;
 							tdClass = cellType;
+							var square = new Square(bRank, file);
+							board.squares.push(square);
+							if (square.piece)
+								content += square.piece.color + " " + square.piece.type;
+							
 						}
-						var tdClass = outer ? "outer" : cellType;
-						var content = (outerColumn && !outerRow) ? letter : (outerRow && !outerColumn) ? rank -1: "";
+						
+						content += (outerColumn && !outerRow) ? letter : (outerRow && !outerColumn) ? rank -1 :"";
 						txt += "<td class=\"" + tdClass + "\" id=\"" +  cell + "\">"+ content +"</td>";
 					}
 					txt += "</tr>"; 
 				}
 				return txt;
 			}
-			Board.prototype.newGame = function(){
-				
+
+			function Square(rank, file){
+				this.rank = rank;
+				this.file = file;
+				this.piece = this.getStartingPiece();
 			}
-			
-			function Square(position){
-				this.position = position;
+
+			Square.prototype.getStartingPiece = function(){
+				var rank = this.rank;
+				var file = this.file;
+				var type = (rank == 1 || rank == 8) ? (file == 1 || file ==  8) ? "rook" : (file == 2 || file == 7) ? "knight" : (file == 3 || file == 6) ? "bishop" : (file == 4) ? "queen" : (file == 5) ? "king" : null : (rank == 2 || rank == 7) ?  "pawn":  null;
+				var color  = (rank == 1 || rank == 2) ? "white" : (rank ==  7 || rank == 8) ? "black" : null;
+				if (type && color)
+					return new Piece(color, type, this);
+				else
+					return null;
 			}
-			
-			function Piece(square){
+
+			function Piece(color, type, square){
+				this.color = color;
+				this.type = type;
 				this.square = square;
 			}
+
 			Piece.prototype.move = function(square){
 				this.square = square;
 			}
-			function Bishop(){
-			}
-			Bishop.prototype = new Piece();
-			Bishop.prototype.constructor=Bishop;
-			Bishop.prototype.parent = Piece.prototype;
-			function Knight(){
-			}
-			Knight.prototype = new Piece();
-			Knight.prototype.constructor=Knight;
-			Knight.prototype.parent = Piece.prototype;
-			function Rook(){
-			}
-			Rook.prototype = new Piece();
-			Rook.prototype.constructor=Rook;
-			Rook.prototype.parent = Rook.prototype;
-			function Pawn(){
-			}
-			Pawn.prototype = new Piece();
-			Pawn.prototype.constructor=Pawn;
-			Pawn.prototype.parent = Piece.prototype;
-			function Queen(){
-			}
-			Queen.prototype = new Piece();
-			Queen.prototype.constructor=Queen;
-			Queen.prototype.parent = Piece.prototype;
-			function King(){
-			}
-			King.prototype = new Piece();
-			King.prototype.constructor=King;
-			King.prototype.parent = Piece.prototype;
-			var board = new Board();
-			document.getElementById("board").innerHTML=board.drawBoard();
+			document.getElementById("board").innerHTML=Board.drawBoard();
 		</script>
 	</body>
 </html>
