@@ -2,77 +2,15 @@
 <html>
 	<head>
 		<link href="stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src ="chess.js" />
 	</head>
 	<body>
-		<table id="board"></table>
-		<script type="text/javascript">
-			function Board() {
-				this.squares = new Array();
-			}
-			Board.drawBoard = function() {
-				var board = new Board();
-				var txt = "";
-				var letters = new Array("A","B","C","D","E","F","G","H");
-				var ranks = 10;
-				var files = 10;
-				for (rank=ranks; rank > 0; rank--){
-					txt += "<tr id=\"" + (rank -1)  + "\">" ;
-					for (file=0; file < files; file++){
-						var cellType = (rank + file) % 2 == 0 ? "light" : "dark";
-						var letter = letters[file -1];
-						var cell = (rank -1) + letter;
-						var outerColumn = (rank == 1 || rank == 10);
-						var outerRow = (file == 0 || file == 9);
-						var outer = (outerColumn || outerRow);
-						var tdClass = outer ? "outer" : cellType;
-						var content = ""
-						if (outer){
-							tdClass = "outer";
-						} else {
-							bRank = rank -1;
-							tdClass = cellType;
-							var square = new Square(bRank, file);
-							board.squares.push(square);
-							if (square.piece)
-								content += square.piece.color + " " + square.piece.type;
-							
-						}
-						
-						content += (outerColumn && !outerRow) ? letter : (outerRow && !outerColumn) ? rank -1 :"";
-						txt += "<td class=\"" + tdClass + "\" id=\"" +  cell + "\">"+ content +"</td>";
-					}
-					txt += "</tr>"; 
-				}
-				return txt;
-			}
-
-			function Square(rank, file){
-				this.rank = rank;
-				this.file = file;
-				this.piece = this.getStartingPiece();
-			}
-
-			Square.prototype.getStartingPiece = function(){
-				var rank = this.rank;
-				var file = this.file;
-				var type = (rank == 1 || rank == 8) ? (file == 1 || file ==  8) ? "rook" : (file == 2 || file == 7) ? "knight" : (file == 3 || file == 6) ? "bishop" : (file == 4) ? "queen" : (file == 5) ? "king" : null : (rank == 2 || rank == 7) ?  "pawn":  null;
-				var color  = (rank == 1 || rank == 2) ? "white" : (rank ==  7 || rank == 8) ? "black" : null;
-				if (type && color)
-					return new Piece(color, type, this);
-				else
-					return null;
-			}
-
-			function Piece(color, type, square){
-				this.color = color;
-				this.type = type;
-				this.square = square;
-			}
-
-			Piece.prototype.move = function(square){
-				this.square = square;
-			}
-			document.getElementById("board").innerHTML=Board.drawBoard();
-		</script>
+		<table id="board" onLoad="Board.drawBoard();">
+			
+		</table>
+		<form>
+		<div id="button"
+		ONCLICK='Board.drawBoard();'><span>draw te board!!!!</span></div>
+		</form>
 	</body>
 </html>
