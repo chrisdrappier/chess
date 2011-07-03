@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link href="stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="stylesheets/chess.css" media="screen" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<table id="board"></table>
@@ -70,7 +70,9 @@
 				this.element.setAttribute("class", color + type);
 				this.element.setAttribute("id", this.square.rank + this.square.letter);
 				var image = document.createElement("img");
-				image.setAttribute("src", "images/" + type + ".png");
+				image.setAttribute("src", "images/" + color + type + ".png");
+				image.setAttribute("width", "50px");
+				image.setAttribute("height", "50px");
 				this.element.appendChild(image);
 				square.element.appendChild(this.element);
 			}
