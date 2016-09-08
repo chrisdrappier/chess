@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "mocha test/*.js",
+    "test": "mocha test/*.js test/react/*.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "devDependencies": {

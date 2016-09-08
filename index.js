@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Board } from './src/chess'
+
+import ReactBoard from './src/react/board'
 
 const App = () => {
-  var board = new Board()
   return (
-    <div>{board.pieces.length}</div>
+    <ReactBoard />
   )
 }
 ReactDOM.render(
