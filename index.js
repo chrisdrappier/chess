@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Board from './src/chess'
+import { Board } from './src/chess'
 
 const App = () => {
   var board = new Board()
