@@ -1,1 +1,1 @@
-var chess = require('./javascripts/chess.js')
+var chess = require('./src/chess.js')

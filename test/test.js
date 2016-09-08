@@ -1,5 +1,5 @@
 var assert = require('assert')
-var chess = require('../javascripts/chess.js')
+var chess = require('../src/chess.js')
 
 describe('Piece', function () {
   var piece = new chess.Piece('white')
