@@ -55,5 +55,12 @@ describe('Board', function () {
       })
       assert.strictEqual(actual_pawns.length, pawns.length)
     })
+
+    it('has 2 black rooks', function () {
+      var rooks = board.pieces.filter(function (piece) {
+        return piece.constructor.name === 'Rook' && piece.color === 'white'
+      })
+      assert.strictEqual(rooks.length, 2)
+    })
   })
 })
