@@ -86,4 +86,4 @@ class King extends Piece {
 
 }
 
-export default Board
+export {Board, Piece, Space}
