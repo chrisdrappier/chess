@@ -3,45 +3,12 @@ class Board {
     this.pieces = Array.apply(null, Array(32)).map(function (val, index) {
       if (index > 15) {
         return new Piece('black')
+      } else if (index <= 15 && index > 7) {
+        return new Pawn('white')
       } else {
         return new Piece('white')
       }
     })
-
-    // this.pieces = [
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('black'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white'),
-    //   new Piece('white')
-    // ]
   }
 }
 
