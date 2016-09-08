@@ -36,24 +36,18 @@ describe('Board', function () {
     })
 
     it('has 8 white pawns', function () {
-      var white_pawns = Array.apply(null, Array(8)).map(function (val) {
-        return new chess.Pawn('white')
-      })
-      var actual_white_pawns = board.pieces.filter(function (piece) {
+      var pawns = board.pieces.filter(function (piece) {
         return piece.constructor.name === 'Pawn' && piece.color === 'white'
       })
       console.log(white_pawns[0].constructor.name)
-      assert.strictEqual(actual_white_pawns.length, white_pawns.length)
+      assert.strictEqual(pawns.length, 8)
     })
 
     it('has 8 black pawns', function () {
-      var pawns = Array.apply(null, Array(8)).map(function (val) {
-        return new chess.Pawn('black')
-      })
-      var actual_pawns = board.pieces.filter(function (piece) {
+      var pawns = board.pieces.filter(function (piece) {
         return piece.constructor.name === 'Pawn' && piece.color === 'white'
       })
-      assert.strictEqual(actual_pawns.length, pawns.length)
+      assert.strictEqual(pawns.length, 8)
     })
 
     it('has 2 black rooks', function () {
