@@ -86,6 +86,4 @@ class King extends Piece {
 
 }
 
-module.exports = {
-  Board, Piece, Pawn, Space
-}
+export default Board
