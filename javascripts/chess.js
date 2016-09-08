@@ -2,7 +2,7 @@ class Board {
   constructor () {
     this.pieces = Board.white_pawns().concat(Board.black_pawns()).concat(Board.rooks()).concat(Board.bishops()).concat(Board.knights()).concat(Board.kings()).concat(Board.queens())
     this.spaces = this.pieces.concat(Array.apply(null, Array(32))).map(function (val, index) {
-       return new Space(index, val)
+      return new Space(index, val)
     })
   }
 
@@ -47,7 +47,6 @@ class Space {
     } else {
       this.piece = new NullPiece()
     }
-
   }
 }
 
