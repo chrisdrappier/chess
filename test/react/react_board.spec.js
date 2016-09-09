@@ -1,6 +1,6 @@
 import React from 'react'
-import { shallow, render } from 'enzyme'
-import {expect} from 'chai'
+import { render } from 'enzyme'
+import { expect } from 'chai'
 import { describe, it } from 'mocha'
 
 import ReactBoard from '../../src/react/board'
