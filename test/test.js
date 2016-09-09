@@ -5,8 +5,8 @@ import { describe, it } from 'mocha'
 describe('Piece', () => {
   var piece = new chess.Piece('white')
 
-  it('has a color', () => {
-    assert(piece.color === 'white')
+  it('has a render', () => {
+    assert(piece.render === '')
   })
 })
 
@@ -34,10 +34,6 @@ describe('Board', () => {
   var board = new chess.Board()
 
   describe('spaces', () => {
-    it('has spaces', () => {
-      assert(Array.isArray(board.spaces))
-    })
-
     it('has 64 spaces', () => {
       var spaces = board.spaces.filter((space) => {
         return space.constructor.name === 'Space'
@@ -54,108 +50,86 @@ describe('Board', () => {
   })
 
   describe('pieces', () => {
-    it('has pieces', () => {
-      assert(Array.isArray(board.pieces))
-    })
-
-    it('has 16 white pieces and 16 black pieces', () => {
-      var white_pieces = Array.apply(null, Array(16)).map((val) => {
-        return new chess.Piece('white')
-      })
-      var black_pieces = Array.apply(null, Array(16)).map((val) => {
-        return new chess.Piece('black')
-      })
-      var actual_white_pieces = board.pieces.filter((piece) => {
-        return piece.color === 'white'
-      })
-      var actual_black_pieces = board.pieces.filter((piece) => {
-        return piece.color === 'black'
-      })
-
-      assert.strictEqual(actual_white_pieces.length, white_pieces.length)
-      assert.strictEqual(actual_black_pieces.length, black_pieces.length)
-    })
-
     it('has 8 white pawns', () => {
-      var pawns = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Pawn' && piece.color === 'white'
+      var pawns = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhitePawn'
       })
       assert.strictEqual(pawns.length, 8)
     })
 
     it('has 8 black pawns', () => {
-      var pawns = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Pawn' && piece.color === 'black'
+      var pawns = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackPawn'
       })
       assert.strictEqual(pawns.length, 8)
     })
 
     it('has 2 black rooks', () => {
-      var rooks = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Rook' && piece.color === 'black'
+      var rooks = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackRook'
       })
       assert.strictEqual(rooks.length, 2)
     })
 
     it('has 2 white rooks', () => {
-      var rooks = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Rook' && piece.color === 'white'
+      var rooks = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhiteRook'
       })
       assert.strictEqual(rooks.length, 2)
     })
 
     it('has 2 black bishops', () => {
-      var bishops = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Bishop' && piece.color === 'black'
+      var bishops = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackBishop'
       })
       assert.strictEqual(bishops.length, 2)
     })
 
     it('has 2 white bishops', () => {
-      var bishops = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Bishop' && piece.color === 'white'
+      var bishops = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhiteBishop'
       })
       assert.strictEqual(bishops.length, 2)
     })
 
     it('has 2 black knights', () => {
-      var knights = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Knight' && piece.color === 'black'
+      var knights = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackKnight'
       })
       assert.strictEqual(knights.length, 2)
     })
 
     it('has 2 white knights', () => {
-      var knights = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Knight' && piece.color === 'white'
+      var knights = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhiteKnight'
       })
       assert.strictEqual(knights.length, 2)
     })
 
     it('has 1 black king', () => {
-      var king = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'King' && piece.color === 'black'
+      var king = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackKing'
       })
       assert.strictEqual(king.length, 1)
     })
 
     it('has 1 white king', () => {
-      var king = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'King' && piece.color === 'white'
+      var king = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhiteKing'
       })
       assert.strictEqual(king.length, 1)
     })
 
     it('has 1 black queen', () => {
-      var queen = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Queen' && piece.color === 'black'
+      var queen = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'BlackQueen'
       })
       assert.strictEqual(queen.length, 1)
     })
 
     it('has 1 white queen', () => {
-      var queen = board.pieces.filter((piece) => {
-        return piece.constructor.name === 'Queen' && piece.color === 'white'
+      var queen = board.spaces.filter((space) => {
+        return space.piece.constructor.name === 'WhiteQueen'
       })
       assert.strictEqual(queen.length, 1)
     })

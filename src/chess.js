@@ -3,48 +3,41 @@ const MapAll = (count, callback) => {
 }
 class Board {
   constructor () {
-    this.pieces = Board.WhitePawns().concat(
+    this.spaces = Board.BlackBackRow().concat(
                   Board.BlackPawns()).concat(
-                  Board.rooks()).concat(
-                  Board.bishops()).concat(
-                  Board.knights()).concat(
-                  Board.kings()).concat(
-                  Board.queens())
-    this.spaces = this.pieces.concat(Array.apply(null, Array(32))).map((piece, index) => {
-      return new Space(index, piece)
-    })
+                  Board.EmptyRows()).concat(
+                  Board.WhitePawns()).concat(
+                  Board.WhiteBackRow()).map((piece, index) => {
+                    return new Space(index, piece)
+                  })
   }
 
+  static EmptyRows () {
+    return Array.apply(null, Array(32))
+  }
+
+  static WhiteBackRow () {
+    var minorPieces = [new WhiteRook(), new WhiteKnight(), new WhiteBishop()]
+    return minorPieces.concat([new WhiteQueen(), new WhiteKing()]).concat(minorPieces.reverse())
+  }
   static WhitePawns () {
     return MapAll(8, (val, index) => {
-      return new Pawn('white')
+      return new WhitePawn()
     })
   }
 
+  static BlackBackRow () {
+    var minorPieces = [new BlackRook(), new BlackKnight(), new BlackBishop()]
+    return minorPieces.concat([new BlackQueen(), new BlackKing()]).concat(minorPieces.reverse())
+  }
   static BlackPawns () {
     return MapAll(8, (val, index) => {
-      return new Pawn('black')
+      return new BlackPawn()
     })
   }
 
-  static rooks () {
-    return [new Rook('white'), new Rook('black'), new Rook('white'), new Rook('black')]
-  }
+  static EmptyRow () {
 
-  static bishops () {
-    return [new Bishop('white'), new Bishop('black'), new Bishop('white'), new Bishop('black')]
-  }
-
-  static knights () {
-    return [new Knight('white'), new Knight('black'), new Knight('white'), new Knight('black')]
-  }
-
-  static kings () {
-    return [new King('black'), new King('white')]
-  }
-
-  static queens () {
-    return [new Queen('black'), new Queen('white')]
   }
 }
 
@@ -65,37 +58,83 @@ class Space {
 class NullPiece {
   constructor () {
     this.color = null
+    this.render = ''
   }
 }
 
 class Piece {
-  constructor (color) {
-    this.color = color
+  get render () {
+    return ''
   }
 }
 
-class Pawn extends Piece {
-
+class WhitePawn extends Piece {
+  get render () {
+    return '♙'
+  }
+}
+class BlackPawn extends Piece {
+  get render () {
+    return '♟'
+  }
 }
 
-class Rook extends Piece {
-
+class WhiteRook extends Piece {
+  get render () {
+    return '♖'
+  }
+}
+class BlackRook extends Piece {
+  get render () {
+    return '♜'
+  }
 }
 
-class Bishop extends Piece {
-
+class WhiteBishop extends Piece {
+  get render () {
+    return '♗'
+  }
+}
+class BlackBishop extends Piece {
+  get render () {
+    return '♝'
+  }
 }
 
-class Knight extends Piece {
-
+class WhiteKnight extends Piece {
+  get render () {
+    return '♘'
+  }
 }
 
-class Queen extends Piece {
-
+class BlackKnight extends Piece {
+  get render () {
+    return '♞'
+  }
 }
 
-class King extends Piece {
+class WhiteQueen extends Piece {
+  get render () {
+    return '♕'
+  }
+}
 
+class BlackQueen extends Piece {
+  get render () {
+    return '♛'
+  }
+}
+
+class WhiteKing extends Piece {
+  get render () {
+    return '♔'
+  }
+}
+
+class BlackKing extends Piece {
+  get render () {
+    return '♚'
+  }
 }
 
 export {Board, Piece, Space}

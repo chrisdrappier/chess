@@ -6,6 +6,7 @@ class ReactSpace extends Component {
       <div
         className={'space ' + this.props.space.color}
         key={this.props.space.index}>
+        <div className="piece">{this.props.space.piece.render}</div>
       </div>
     )
   }

@@ -8,7 +8,7 @@ class ReactBoard extends Component {
   render () {
     var board = new Board()
     var spaces = board.spaces.map((space) => {
-      return <ReactSpace space={space} />
+      return <ReactSpace space={space} key={space.index} />
     })
     return <div id="board">{spaces}</div>
   }

@@ -9,9 +9,13 @@
 	margin: 0;
 	padding: 0;
 	border: 1px solid black;
-	display: inline-block;
+	float: left;
 }
 
+.piece {
+	font-size: 45px;
+
+}
 
 .dark {
 	background-color : grey;
@@ -19,8 +23,4 @@
 
 .light {
 	background-color : white;
-}
-
-.outer{
-	text-align: center;
 }
