@@ -1,9 +1,15 @@
+#board {
+	height: 450px;
+	width: 450px;
+}
+
 .space {
 	height : 50px;
 	width : 50px;
 	margin: 0;
 	padding: 0;
 	border: 1px solid black;
+	float: left;
 }
 
 

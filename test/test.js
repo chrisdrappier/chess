@@ -16,6 +16,10 @@ describe('Space', () => {
   it('has an index', () => {
     assert(space.index === 0)
   })
+
+  it('has a color', () => {
+    assert(space.color === 'light')
+  })
 })
 
 describe('Board', () => {

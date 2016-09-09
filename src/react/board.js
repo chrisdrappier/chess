@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Board } from '../chess'
+import Space from './space'
 const style = require('../../stylesheets/chess.css')
 
 class ReactBoard extends Component {
@@ -7,7 +8,7 @@ class ReactBoard extends Component {
   render () {
     var board = new Board()
     var spaces = board.spaces.map((space) => {
-      return <div className="space" key={space.index}><b>{space.index}</b></div>
+      return <Space />
     })
     return <div id="board">{spaces}</div>
   }

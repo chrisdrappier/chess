@@ -56,6 +56,7 @@ class Space {
     } else {
       this.piece = new NullPiece()
     }
+    this.color = (index % 2) ? 'dark' : 'light'
   }
 }
 
