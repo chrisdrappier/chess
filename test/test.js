@@ -20,6 +20,14 @@ describe('Space', () => {
   it('has a color', () => {
     assert(space.color === 'light')
   })
+
+  it('has a row', () => {
+    assert(space.row === 0)
+  })
+
+  it('has a column', () => {
+    assert(space.column === 0)
+  })
 })
 
 describe('Board', () => {

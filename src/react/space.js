@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Space } from '../chess'
 
 class ReactSpace extends Component {
   render () {
-    var space = new Space(0)
-    return <div className="space" key={space.index}><b>{space.index}</b></div>
+    return (
+      <div
+        className={'space ' + this.props.space.color}
+        key={this.props.space.index}>
+      </div>
+    )
   }
 }
 

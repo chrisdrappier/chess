@@ -1,10 +1,10 @@
-const map_all = (count, callback) => {
+const MapAll = (count, callback) => {
   return Array.apply(null, Array(count)).map(callback)
 }
 class Board {
   constructor () {
-    this.pieces = Board.white_pawns().concat(
-                  Board.black_pawns()).concat(
+    this.pieces = Board.WhitePawns().concat(
+                  Board.BlackPawns()).concat(
                   Board.rooks()).concat(
                   Board.bishops()).concat(
                   Board.knights()).concat(
@@ -15,14 +15,14 @@ class Board {
     })
   }
 
-  static white_pawns () {
-    return map_all(8, (val, index) => {
+  static WhitePawns () {
+    return MapAll(8, (val, index) => {
       return new Pawn('white')
     })
   }
 
-  static black_pawns () {
-    return map_all(8, (val, index) => {
+  static BlackPawns () {
+    return MapAll(8, (val, index) => {
       return new Pawn('black')
     })
   }
@@ -56,7 +56,9 @@ class Space {
     } else {
       this.piece = new NullPiece()
     }
-    this.color = (index % 2) ? 'dark' : 'light'
+    this.row = (index % 8)
+    this.column = parseInt(index / 8)
+    this.color = (Math.abs((this.row - this.column) % 2)) ? 'dark' : 'light'
   }
 }
 
