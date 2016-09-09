@@ -3,6 +3,7 @@ const MapAll = (count, callback) => {
 }
 class Board {
   constructor () {
+
     this.spaces = Board.BlackBackRow().concat(
                   Board.BlackPawns()).concat(
                   Board.EmptyRows()).concat(
@@ -10,6 +11,20 @@ class Board {
                   Board.WhiteBackRow()).map((piece, index) => {
                     return new Space(index, piece)
                   })
+    this.captures = []
+  }
+
+  get pieces () {
+    return this.spaces.map((space) => {
+      return space.piece
+    }).concat(this.captures)
+  }
+
+  move (currentSpace, newSpace) {
+
+    this.captures = this.captures.concat([newSpace.piece])
+    newSpace.piece = currentSpace.piece
+    currentSpace.piece = new NullPiece()
   }
 
   static EmptyRows () {
@@ -139,4 +154,4 @@ class BlackKing extends Piece {
   }
 }
 
-export {Board, Piece, Space}
+export {Board, Piece, NullPiece, Space}
