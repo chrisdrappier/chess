@@ -12,10 +12,4 @@ describe('<Space />', () => {
   it('has a div', () => {
     expect(space.find('div.space')).to.have.length(1)
   })
-
-  it('has a space', () => {
-    console.log('------------------------------')
-    console.log(space.props)
-    //expect(space.props).to.equal('test!')
-  })
 })

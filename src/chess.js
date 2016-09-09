@@ -35,10 +35,6 @@ class Board {
       return new BlackPawn()
     })
   }
-
-  static EmptyRow () {
-
-  }
 }
 
 class Space {
@@ -59,10 +55,15 @@ class NullPiece {
   constructor () {
     this.color = null
     this.render = ''
+    this.available_spaces = []
   }
 }
 
 class Piece {
+
+  get available_spaces () {
+    return []
+  }
   get render () {
     return ''
   }
@@ -84,6 +85,7 @@ class WhiteRook extends Piece {
     return '♖'
   }
 }
+
 class BlackRook extends Piece {
   get render () {
     return '♜'
