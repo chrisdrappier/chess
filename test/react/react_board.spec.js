@@ -1,20 +1,20 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, render } from 'enzyme'
 import {expect} from 'chai'
 import { describe, it } from 'mocha'
 
 import ReactBoard from '../../src/react/board'
 
 describe('<Board/>', () => {
-  it('should have an image to display the gravatar', () => {
-    const wrapper = shallow(<ReactBoard />)
+  it('should have a div for every space', () => {
+    const wrapper = render(<ReactBoard />)
     console.log(wrapper)
-    expect(wrapper.find('img')).to.have.length(1)
+    expect(wrapper.find('div.space')).to.have.length(64)
   })
 
   it('should have props for email and src', () => {
-    const wrapper = shallow(<ReactBoard />)
-    expect(wrapper.props().email).to.be.defined
-    expect(wrapper.props().src).to.be.defined
+    // const wrapper = shallow(<ReactBoard />)
+    // expect(wrapper.props().email).to.be.defined
+    // expect(wrapper.props().src).to.be.defined
   })
 })

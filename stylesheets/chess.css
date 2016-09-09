@@ -1,23 +1,20 @@
-#board td {
+.space {
 	height : 50px;
 	width : 50px;
 	margin: 0;
 	padding: 0;
+	border: 1px solid black;
 }
 
-#board tr {
-	margin: 0;
-	padding: 0;
-}
-#board td.dark {
+
+.dark {
 	background-color : grey;
-	color: white;
-}
-#board td.light {
-	background-color : white;
-	
 }
 
-#board td.outer{
+.light {
+	background-color : white;
+}
+
+.outer{
 	text-align: center;
 }
