@@ -3,7 +3,7 @@ import { Board } from '../chess'
 
 class ReactBoard extends Component {
 
-  render() {
+  render () {
     var board = new Board()
     return <div id="board">{board.spaces.length}</div>
   }

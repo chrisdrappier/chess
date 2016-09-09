@@ -1,19 +1,28 @@
+const map_all = (count, callback) => {
+  return Array.apply(null, Array(count)).map(callback)
+}
 class Board {
   constructor () {
-    this.pieces = Board.white_pawns().concat(Board.black_pawns()).concat(Board.rooks()).concat(Board.bishops()).concat(Board.knights()).concat(Board.kings()).concat(Board.queens())
-    this.spaces = this.pieces.concat(Array.apply(null, Array(32))).map(function (val, index) {
-      return new Space(index, val)
+    this.pieces = Board.white_pawns().concat(
+                  Board.black_pawns()).concat(
+                  Board.rooks()).concat(
+                  Board.bishops()).concat(
+                  Board.knights()).concat(
+                  Board.kings()).concat(
+                  Board.queens())
+    this.spaces = this.pieces.concat(Array.apply(null, Array(32))).map((piece, index) => {
+      return new Space(index, piece)
     })
   }
 
   static white_pawns () {
-    return Array.apply(null, Array(8)).map(function (val, index) {
+    return map_all(8, (val, index) => {
       return new Pawn('white')
     })
   }
 
   static black_pawns () {
-    return Array.apply(null, Array(8)).map(function (val, index) {
+    return map_all(8, (val, index) => {
       return new Pawn('black')
     })
   }
