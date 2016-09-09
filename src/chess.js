@@ -3,7 +3,6 @@ const MapAll = (count, callback) => {
 }
 class Board {
   constructor () {
-
     this.spaces = Board.BlackBackRow().concat(
                   Board.BlackPawns()).concat(
                   Board.EmptyRows()).concat(
@@ -21,7 +20,6 @@ class Board {
   }
 
   move (currentSpace, newSpace) {
-
     this.captures = this.captures.concat([newSpace.piece])
     newSpace.piece = currentSpace.piece
     currentSpace.piece = new NullPiece()
@@ -70,13 +68,13 @@ class NullPiece {
   constructor () {
     this.color = null
     this.render = ''
-    this.available_spaces = []
+    this.availableSpaces = []
   }
 }
 
 class Piece {
 
-  get available_spaces () {
+  get availableSpaces () {
     return []
   }
   get render () {

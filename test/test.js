@@ -80,7 +80,7 @@ describe('Board', () => {
       var currentSpace = board.spaces[0]
       var newSpace = board.spaces[63]
       it('vacates the current space', () => {
-        //expect(currentSpace.piece.constructor).to.equal('NullPiece')
+        expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
       })
 
       it('moves to the new space', () => {

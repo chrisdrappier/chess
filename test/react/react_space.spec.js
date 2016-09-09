@@ -1,14 +1,13 @@
 import React from 'react'
-import { render, shallow } from 'enzyme'
+import { render } from 'enzyme'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-
 import ReactSpace from '../../src/react/space'
-import {Space} from '../../src/chess.js'
+import { Board } from '../../src/chess.js'
 
-describe('<Space />', () => {
-  const space = shallow(<ReactSpace space={new Space(1)} />)
-
+describe('<ReactSpace />', () => {
+  const board = new Board()
+  const space = render(<ReactSpace space={board.spaces[0]} />)
   it('has a div', () => {
     expect(space.find('div.space')).to.have.length(1)
   })
