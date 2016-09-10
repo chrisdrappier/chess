@@ -211,10 +211,10 @@ const WhitePieces = () => {
 }
 const StartingSpaces = () => {
   return BlackPieces().concat(
-  EmptyRows()).concat(
-  WhitePieces()).map((piece, index) => {
-    return new Space(index, piece)
-  })
+         EmptyRows()).concat(
+         WhitePieces()).map((piece, index) => {
+           return new Space(index, piece)
+         })
 }
 
 export {Chess, Move, Board, Piece, NullPiece, Space}
