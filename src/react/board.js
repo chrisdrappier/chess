@@ -16,8 +16,8 @@ class ReactBoard extends Component {
   }
   render () {
     var chess = new Chess()
-    var board = chess.board // new Board()
-    var spaces = board.spaces.map((space) => {
+    // var spaces = Array.apply(null, new Array(chess.boardSize)).map((index) => {
+    var spaces = chess.board.spaces.map((space) => {
       return <ReactSpace
         space={space}
         key={space.index}

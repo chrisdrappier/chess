@@ -84,6 +84,11 @@ describe('Chess', () => {
   var chess = new Chess()
 
   describe('pieces', () => {
+    console.log('--------------------------------------')
+    console.log(chess.pieces.map((piece) => {
+      piece.constructor.name
+    }))
+    console.log('--------------------------------------')
     it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn') })
     it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'BlackPawn') })
     it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'BlackRook') })

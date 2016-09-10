@@ -2,15 +2,31 @@ class Chess {
   constructor () {
     this.board = new Board()
     this.captures = []
+    this.pieces = Chess.allPieces
   }
 
-  get pieces () {
-    return this.board.spaces.map((space) => {
-      return space.piece
-    }).concat(this.captures).filter((piece) => {
-      return piece.constructor !== 'NullPiece'
-    })
+  static get allPieces () {
+    return WhitePawn.defaultPieces.concat(
+    WhiteRook.defaultPieces).concat(
+    WhiteBishop.defaultPieces).concat(
+    WhiteKnight.defaultPieces).concat(
+    WhiteKing.defaultPieces).concat(
+    WhiteQueen.defaultPieces).concat(
+    BlackPawn.defaultPieces).concat(
+    BlackRook.defaultPieces).concat(
+    BlackBishop.defaultPieces).concat(
+    BlackKnight.defaultPieces).concat(
+    BlackKing.defaultPieces).concat(
+    BlackQueen.defaultPieces)
   }
+
+  // get pieces () {
+  //   return this.board.spaces.map((space) => {
+  //     return space.piece
+  //   }).concat(this.captures).filter((piece) => {
+  //     return piece.constructor !== 'NullPiece'
+  //   })
+  // }
 
   move (currentSpace, newSpace) {
     new Move(this, currentSpace, newSpace).execute()
@@ -40,25 +56,11 @@ class Move {
     this.captures.push(this.captured)
   }
 
-  get captured () {
-    return this.newSpace.piece
-  }
-
-  get captures () {
-    return this.chess.captures
-  }
-
-  get board () {
-    return this.chess.board
-  }
-
-  get currentPiece () {
-    return this.currentSpace.piece
-  }
-
-  get spaceAvailable () {
-    return (this.availableSpaces.includes(this.newSpace))
-  }
+  get captured () { return this.newSpace.piece }
+  get captures () { return this.chess.captures }
+  get board () { return this.chess.board }
+  get currentPiece () { return this.currentSpace.piece }
+  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) }
 
   get availableSpaces () {
     return this.board.spaces.filter((space) => {
@@ -69,32 +71,27 @@ class Move {
 
 class Board {
   constructor (spaces = StartingSpaces()) {
+    // this.spaces = Array.apply(null, new Array(64)).map((index) => {
+    //   return new Space(index)
+    // })
     this.spaces = spaces
   }
 }
 
 class Space {
-  constructor (index, piece) {
+  constructor (index, piece = new NullPiece()) {
     this.index = index
-    this.piece = piece || new NullPiece()
+    this.piece = piece
   }
 
-  get color () {
-    return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light'
-  }
-  get column () {
-    return parseInt(this.index / 8)
-  }
-  get row () {
-    return (this.index % 8)
-  }
+  get color () { return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light' }
+  get column () { return parseInt(this.index / 8) }
+  get row () { return (this.index % 8) }
 }
 
 class NullPiece {
-  constructor () {
-    this.color = null
-    this.render = ''
-  }
+  get color () { return null }
+  get render () { return '' }
 
   validMove (dontUse = null, dontUse2 = null) {
     return false
@@ -102,114 +99,116 @@ class NullPiece {
 }
 
 class Piece {
-
-  get availableSpaces () {
-    return []
+  constructor (index) { this.index = index }
+  static get defaults () { return [] }
+  static get defaultPieces () {
+    return this.defaults.map((index) => {
+      return new Piece(index)
+    })
   }
-  get render () {
-    return ''
-  }
-  validMove (currentSpace, newSpace) {
-    return true
-  }
+  get availableSpaces () { return [] }
+  get render () { return '' }
+  get space () { return new Space(this.index) }
+  validMove (currentSpace, newSpace) { return true }
 }
 
 class WhitePawn extends Piece {
-  get render () {
-    return '♙'
+  static get defaultPieces () {
+    return [new WhitePawn(32),
+            new WhitePawn(33),
+            new WhitePawn(34),
+            new WhitePawn(35),
+            new WhitePawn(36),
+            new WhitePawn(37),
+            new WhitePawn(38),
+            new WhitePawn(39)]
   }
+  get render () { return '♙' }
   validMove (currentSpace, newSpace) {
     return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 2)
   }
 }
 
 class BlackPawn extends Piece {
-  get render () {
-    return '♟'
+  static get defaultPieces () {
+    return [new BlackPawn(8),
+            new BlackPawn(9),
+            new BlackPawn(10),
+            new BlackPawn(11),
+            new BlackPawn(12),
+            new BlackPawn(13),
+            new BlackPawn(14),
+            new BlackPawn(15)]
   }
+  get render () { return '♟' }
   validMove (currentSpace, newSpace) {
     return (currentSpace.row === newSpace.row && currentSpace.column < newSpace.column + 2)
   }
 }
 
 class WhiteRook extends Piece {
-  get render () {
-    return '♖'
-  }
+  static get defaultPieces () { return [new WhiteRook(56), new WhiteRook(63)] }
+  get render () { return '♖' }
 }
 
 class BlackRook extends Piece {
-  get render () {
-    return '♜'
-  }
+  static get defaultPieces () { return [new BlackRook(0), new BlackRook(7)] }
+  get render () { return '♜' }
 }
 
 class WhiteBishop extends Piece {
-  get render () {
-    return '♗'
-  }
+  static get defaultPieces () { return [new WhiteBishop(61), new WhiteBishop(58)] }
+  get render () { return '♗' }
 }
+
 class BlackBishop extends Piece {
-  get render () {
-    return '♝'
-  }
+  static get defaultPieces () { return [new BlackBishop(5), new BlackBishop(2)] }
+  get render () { return '♝' }
 }
 
 class WhiteKnight extends Piece {
-  get render () {
-    return '♘'
-  }
+  static get defaultPieces () { return [new WhiteKnight(57), new WhiteKnight(62)] }
+  get render () { return '♘' }
 }
 
 class BlackKnight extends Piece {
-  get render () {
-    return '♞'
-  }
+  static get defaultPieces () { return [new BlackKnight(1), new BlackKnight(6)] }
+  get render () { return '♞' }
 }
 
 class WhiteQueen extends Piece {
-  get render () {
-    return '♕'
-  }
+  static get defaultPieces () { return [new WhiteQueen(59)] }
+  get render () { return '♕' }
 }
 
 class BlackQueen extends Piece {
-  get render () {
-    return '♛'
-  }
+  static get defaultPieces () { return [new BlackQueen(3)] }
+  get render () { return '♛' }
 }
 
 class WhiteKing extends Piece {
-  get render () {
-    return '♔'
-  }
+  static get defaultPieces () { return [new WhiteKing(60)] }
+  get render () { return '♔' }
 }
 
 class BlackKing extends Piece {
-  get render () {
-    return '♚'
-  }
+  static get defaultPieces () { return [new BlackKing(4)] }
+  get render () { return '♚' }
 }
 
-const EmptyRows = () => {
-  return Array.apply(null, Array(32))
-}
+const EmptyRows = () => { return Array.apply(null, Array(32)) }
 
 const BlackPawns = () => {
-  return MapAll(8, (val, index) => {
-    return new BlackPawn()
-  })
+  return BlackPawn.defaultPieces
+}
+
+const WhitePawns = () => {
+  return WhitePawn.defaultPieces
 }
 
 const BlackBackRow = () => {
   var minorPieces = [new BlackRook(), new BlackKnight(), new BlackBishop()]
   return minorPieces.concat([new BlackQueen(), new BlackKing()]).concat(minorPieces.reverse())
-}
-
-const WhitePawns = () => {
-  return MapAll(8, (val, index) => {
-    return new WhitePawn()
-  })
 }
 
 const WhiteBackRow = () => {
@@ -225,10 +224,6 @@ const StartingSpaces = () => {
   WhiteBackRow()).map((piece, index) => {
     return new Space(index, piece)
   })
-}
-
-const MapAll = (count, callback) => {
-  return Array.apply(null, Array(count)).map(callback)
 }
 
 export {Chess, Move, Board, Piece, NullPiece, Space}
