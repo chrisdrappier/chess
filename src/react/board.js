@@ -11,8 +11,7 @@ class ReactBoard extends Component {
   }
 
   setSelectedSpace (selectedSpace) {
-    console.log(selectedSpace)
-    this.setState({selectedSpace: selectedSpace})
+    this.setState({selectedSpace: selectedSpace.index})
   }
 
   get chess () { return this.props.chess }
@@ -24,10 +23,11 @@ class ReactBoard extends Component {
       return <ReactSpace
         space={space}
         key={space.index}
-        selectedSpace={this.state.selectedSpace}
+        selected={this.state.selectedSpace === space.index}
         setSelectedSpace={this.setSelectedSpace} />
     })
   }
+
   render () {
     return <div id="board">{this.spaceComponents}</div>
   }

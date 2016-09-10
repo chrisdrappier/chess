@@ -22,3 +22,7 @@
 .light {
 	background-color : white;
 }
+
+.selected {
+	background-color : red;
+}

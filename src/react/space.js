@@ -1,19 +1,32 @@
 import React, { Component } from 'react'
 import ReactPiece from './piece.js'
 class ReactSpace extends Component {
-  render () {
-    const selected = (this.props.selectedSpace ? ' selected' : '')
-    return (
-      <div
-        className={'space ' + this.props.space.color + selected}
-        id={this.props.space.index}>
-        <ReactPiece piece={this.props.space.piece} />
-      </div>
-    )
+  get space () { return this.props.space }
+  get selected () { return this.props.selected }
+
+  get color () { return this.space.color }
+  get index () { return this.space.index }
+  get piece () { return this.space.piece }
+
+  get pieceComponent () { return <ReactPiece piece={this.piece} /> }
+
+  get className () {
+    var classes = ['space', this.color]
+    if (this.selected) {
+      classes.push('selected')
+    }
+    return classes.join(' ')
   }
 
-  setSelectedSpace () {
-    return this.props.setSelectedSpace(this)
+  render () {
+    return (
+      <div
+        className={this.className}
+        id={this.index}
+        onClick={() => { this.props.setSelectedSpace(this) }}>
+        {this.pieceComponent}
+      </div>
+    )
   }
 }
 
