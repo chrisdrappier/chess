@@ -66,9 +66,16 @@ class Space {
     } else {
       this.piece = new NullPiece()
     }
-    this.row = (index % 8)
-    this.column = parseInt(index / 8)
-    this.color = (Math.abs((this.row - this.column) % 2)) ? 'dark' : 'light'
+  }
+
+  get color () {
+    return (Math.abs((this.row - this.column) % 2)) ? 'dark' : 'light'
+  }
+  get column () {
+    return parseInt(this.index / 8)
+  }
+  get row () {
+    return (this.index % 8)
   }
 }
 
