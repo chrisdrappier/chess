@@ -3,18 +3,21 @@ class Chess {
     this.board = new Board()
     this.captures = []
   }
+
+  move (currentSpace, newSpace) {
+    new Move(this, currentSpace, newSpace).execute()
+  }
 }
 
 class Move {
-  constructor (board, currentSpace, newSpace) {
+  constructor (chess, currentSpace, newSpace) {
     this.currentSpace = currentSpace
     this.newSpace = newSpace
-    this.currentPiece = currentSpace.piece
-    this.board = board
+    this.chess = chess
   }
 
   execute () {
-    if (this.spaceAvailable()) {
+    if (this.spaceAvailable) {
       this.capture()
       this.setPieces()
     }
@@ -26,14 +29,30 @@ class Move {
   }
 
   capture () {
-    this.board.captures = this.board.captures.concat([this.newSpace.piece])
+    this.captures.push(this.captured)
   }
 
-  spaceAvailable () {
-    return (this.availableSpacesFor().includes(this.newSpace))
+  get captured () {
+    return this.newSpace.piece
   }
 
-  availableSpacesFor () {
+  get captures () {
+    return this.chess.captures
+  }
+
+  get board () {
+    return this.chess.board
+  }
+
+  get currentPiece () {
+    return this.currentSpace.piece
+  }
+
+  get spaceAvailable () {
+    return (this.availableSpaces.includes(this.newSpace))
+  }
+
+  get availableSpaces () {
     return this.board.spaces.filter((space) => {
       return this.currentPiece.validMove(this.currentSpace, space)
     })
@@ -43,18 +62,12 @@ class Move {
 class Board {
   constructor (spaces = StartingSpaces()) {
     this.spaces = spaces
-    this.captures = []
   }
 
   get pieces () {
     return this.spaces.map((space) => {
       return space.piece
     })
-  }
-
-  move (currentSpace, newSpace) {
-    new Move(this, currentSpace, newSpace).execute()
-    return this
   }
 }
 
@@ -69,7 +82,7 @@ class Space {
   }
 
   get color () {
-    return (Math.abs((this.row - this.column) % 2)) ? 'dark' : 'light'
+    return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light'
   }
   get column () {
     return parseInt(this.index / 8)
@@ -83,6 +96,10 @@ class NullPiece {
   constructor () {
     this.color = null
     this.render = ''
+  }
+
+  validMove (dontUse = null, dontUse2 = null) {
+    return false
   }
 }
 
@@ -175,7 +192,6 @@ class BlackKing extends Piece {
     return '♚'
   }
 }
-
 
 const EmptyRows = () => {
   return Array.apply(null, Array(32))

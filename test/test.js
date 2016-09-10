@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
-import { Chess, Board, Space, Piece } from '../src/chess'
+import { Chess, Space, Piece } from '../src/chess'
 
 const FilterByType = (board, type) => {
   return board.pieces.filter((piece) => {
@@ -13,12 +13,13 @@ const AssertPieceCount = (board, count, type) => {
   assert.strictEqual(pieces.length, count)
 }
 
-const PerformValidMove = (board, current, target) => {
+const PerformValidMove = (chess, current, target) => {
+  var board = chess.board
   var currentSpace = board.spaces[current]
   var newSpace = board.spaces[target]
   var capture = newSpace.piece
   var currentPiece = currentSpace.piece
-  board.move(currentSpace, newSpace)
+  chess.move(currentSpace, newSpace)
   describe(`move from ${current} to ${target}`, () => {
     it(`vacates ${current}`, () => {
       expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
@@ -29,7 +30,7 @@ const PerformValidMove = (board, current, target) => {
     })
 
     it(`captures piece on ${target}`, () => {
-      expect(board.captures).to.include(capture)
+      expect(chess.captures).to.include(capture)
     })
   })
 }
@@ -79,41 +80,43 @@ describe('Space', () => {
   })
 })
 
-describe('Board', () => {
-  var board = new Board()
+describe('Chess', () => {
+  var chess = new Chess()
+  describe('board', () => {
+    var board = chess.board
 
-  describe('spaces', () => {
-    it('has 64 spaces', () => {
-      assert.strictEqual(board.spaces.length, 64)
+    describe('spaces', () => {
+      it('has 64 spaces', () => {
+        assert.strictEqual(board.spaces.length, 64)
+      })
+    })
+
+    describe('all pieces have a space', () => {
+      var spaces = board.pieces.filter((piece) => {
+        return piece.constructor.name !== 'NullPiece'
+      })
+      assert.strictEqual(spaces.length, 32)
+    })
+
+    describe('pieces', () => {
+      it('has 8 white pawns', () => { AssertPieceCount(board, 8, 'WhitePawn') })
+      it('has 8 black pawns', () => { AssertPieceCount(board, 8, 'BlackPawn') })
+      it('has 2 black rooks', () => { AssertPieceCount(board, 2, 'BlackRook') })
+      it('has 2 white rooks', () => { AssertPieceCount(board, 2, 'WhiteRook') })
+      it('has 2 black bishops', () => { AssertPieceCount(board, 2, 'BlackBishop') })
+      it('has 2 white bishops', () => { AssertPieceCount(board, 2, 'WhiteBishop') })
+      it('has 2 black knights', () => { AssertPieceCount(board, 2, 'BlackKnight') })
+      it('has 2 white knights', () => { AssertPieceCount(board, 2, 'WhiteKnight') })
+      it('has 1 black king', () => { AssertPieceCount(board, 1, 'BlackKing') })
+      it('has 1 white king', () => { AssertPieceCount(board, 1, 'WhiteKing') })
+      it('has 1 black queen', () => { AssertPieceCount(board, 1, 'BlackQueen') })
+      it('has 1 white queen', () => { AssertPieceCount(board, 1, 'WhiteQueen') })
     })
   })
-
-  describe('all pieces have a space', () => {
-    var spaces = board.pieces.filter((piece) => {
-      return piece.constructor.name !== 'NullPiece'
-    })
-    assert.strictEqual(spaces.length, 32)
-  })
-
-  describe('pieces', () => {
-    it('has 8 white pawns', () => { AssertPieceCount(board, 8, 'WhitePawn') })
-    it('has 8 black pawns', () => { AssertPieceCount(board, 8, 'BlackPawn') })
-    it('has 2 black rooks', () => { AssertPieceCount(board, 2, 'BlackRook') })
-    it('has 2 white rooks', () => { AssertPieceCount(board, 2, 'WhiteRook') })
-    it('has 2 black bishops', () => { AssertPieceCount(board, 2, 'BlackBishop') })
-    it('has 2 white bishops', () => { AssertPieceCount(board, 2, 'WhiteBishop') })
-    it('has 2 black knights', () => { AssertPieceCount(board, 2, 'BlackKnight') })
-    it('has 2 white knights', () => { AssertPieceCount(board, 2, 'WhiteKnight') })
-    it('has 1 black king', () => { AssertPieceCount(board, 1, 'BlackKing') })
-    it('has 1 white king', () => { AssertPieceCount(board, 1, 'WhiteKing') })
-    it('has 1 black queen', () => { AssertPieceCount(board, 1, 'BlackQueen') })
-    it('has 1 white queen', () => { AssertPieceCount(board, 1, 'WhiteQueen') })
-  })
-
   describe('move', () => {
     describe('when board is new', () => {
-      PerformValidMove(new Board(), 51, 35)
-      // PerformInvalidMove(new Board(), 51, 22)
+      PerformValidMove(chess, 51, 35)
+      // PerformInvalidMove(chess.board, 51, 22, chess)
     })
   })
 })

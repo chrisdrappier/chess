@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Board } from '../chess'
+import { Chess } from '../chess'
 import ReactSpace from './space'
 require('../../stylesheets/chess.css')
 
@@ -15,7 +15,8 @@ class ReactBoard extends Component {
     this.setState({selectedSpace: selectedSpace})
   }
   render () {
-    var board = new Board()
+    var chess = new Chess()
+    var board = chess.board // new Board()
     var spaces = board.spaces.map((space) => {
       return <ReactSpace
         space={space}
