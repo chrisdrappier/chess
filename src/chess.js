@@ -14,7 +14,7 @@ class Chess {
     }).concat(this.captures)
   }
 
-  static getStartingBoard () {
+  static getStartingSpaces () {
     return Chess.BlackBackRow().concat(
     Chess.BlackPawns()).concat(
     Board.EmptyRows()).concat(
@@ -45,9 +45,9 @@ class Chess {
   }
 }
 class Board {
-  constructor (spaces) {
+  constructor (spaces = Chess.getStartingSpaces()) {
     this.captures = []
-    this.spaces = Chess.getStartingBoard()
+    this.spaces = spaces
   }
 
    get pieces () {
