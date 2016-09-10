@@ -1,7 +1,3 @@
-const MapAll = (count, callback) => {
-  return Array.apply(null, Array(count)).map(callback)
-}
-
 class Chess {
   constructor () {
     this.board = new Board()
@@ -10,10 +6,40 @@ class Chess {
 }
 
 class Move {
-  constructor (currentSpace, newSpace) {
+  constructor (board, currentSpace, newSpace) {
+    this.currentSpace = currentSpace
+    this.newSpace = newSpace
+    this.currentPiece = currentSpace.piece
+    this.board = board
+  }
 
+  execute () {
+    if (this.spaceAvailable()) {
+      this.capture()
+      this.setPieces()
+    }
+  }
+
+  setPieces () {
+    this.newSpace.piece = this.currentPiece
+    this.currentSpace.piece = new NullPiece()
+  }
+
+  capture () {
+    this.board.captures = this.board.captures.concat([this.newSpace.piece])
+  }
+
+  spaceAvailable () {
+    return (this.availableSpacesFor().includes(this.newSpace))
+  }
+
+  availableSpacesFor () {
+    return this.board.spaces.filter((space) => {
+      return this.currentPiece.validMove(this.currentSpace, space)
+    })
   }
 }
+
 class Board {
   constructor (spaces = StartingSpaces()) {
     this.spaces = spaces
@@ -27,34 +53,8 @@ class Board {
   }
 
   move (currentSpace, newSpace) {
-    if (this.spaceAvailable(currentSpace, newSpace)) {
-      this.capture(newSpace)
-      this.setPieces(currentSpace, newSpace)
-    }
+    new Move(this, currentSpace, newSpace).execute()
     return this
-  }
-
-  setPieces (currentSpace, newSpace) {
-    var currentPiece = currentSpace.piece
-    newSpace.piece = currentPiece
-    currentSpace.piece = new NullPiece()
-    return this
-  }
-
-  capture (newSpace) {
-    this.captures = this.captures.concat([newSpace.piece])
-    return this
-  }
-
-  spaceAvailable (currentSpace, newSpace) {
-    return (this.availableSpacesFor(currentSpace).includes(newSpace))
-  }
-
-  availableSpacesFor (currentSpace) {
-    var piece = currentSpace.piece
-    return this.spaces.filter((space) => {
-      return piece.validMove(currentSpace, space)
-    })
   }
 }
 
@@ -204,6 +204,10 @@ const StartingSpaces = () => {
   WhiteBackRow()).map((piece, index) => {
     return new Space(index, piece)
   })
+}
+
+const MapAll = (count, callback) => {
+  return Array.apply(null, Array(count)).map(callback)
 }
 
 export {Chess, Move, Board, Piece, NullPiece, Space}
