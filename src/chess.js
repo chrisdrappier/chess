@@ -4,6 +4,14 @@ class Chess {
     this.captures = []
   }
 
+  get pieces () {
+    return this.board.spaces.map((space) => {
+      return space.piece
+    }).concat(this.captures).filter((piece) => {
+      return piece.constructor !== 'NullPiece'
+    })
+  }
+
   move (currentSpace, newSpace) {
     new Move(this, currentSpace, newSpace).execute()
   }
@@ -63,22 +71,12 @@ class Board {
   constructor (spaces = StartingSpaces()) {
     this.spaces = spaces
   }
-
-  get pieces () {
-    return this.spaces.map((space) => {
-      return space.piece
-    })
-  }
 }
 
 class Space {
   constructor (index, piece) {
     this.index = index
-    if (piece != null) {
-      this.piece = piece
-    } else {
-      this.piece = new NullPiece()
-    }
+    this.piece = piece || new NullPiece()
   }
 
   get color () {
