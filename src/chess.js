@@ -1,32 +1,27 @@
 const MapAll = (count, callback) => {
   return Array.apply(null, Array(count)).map(callback)
 }
-class Board {
+
+class Chess {
   constructor () {
-    this.spaces = Board.BlackBackRow().concat(
-                  Board.BlackPawns()).concat(
-                  Board.EmptyRows()).concat(
-                  Board.WhitePawns()).concat(
-                  Board.WhiteBackRow()).map((piece, index) => {
-                    return new Space(index, piece)
-                  })
+    this.board = new Board()
     this.captures = []
   }
 
   get pieces () {
-    return this.spaces.map((space) => {
+    return this.board.spaces.map((space) => {
       return space.piece
     }).concat(this.captures)
   }
 
-  move (currentSpace, newSpace) {
-    this.captures = this.captures.concat([newSpace.piece])
-    newSpace.piece = currentSpace.piece
-    currentSpace.piece = new NullPiece()
-  }
-
-  static EmptyRows () {
-    return Array.apply(null, Array(32))
+  static getStartingBoard () {
+    return Chess.BlackBackRow().concat(
+    Chess.BlackPawns()).concat(
+    Board.EmptyRows()).concat(
+    Chess.WhitePawns()).concat(
+    Chess.WhiteBackRow()).map((piece, index) => {
+      return new Space(index, piece)
+    })
   }
 
   static WhiteBackRow () {
@@ -49,6 +44,53 @@ class Board {
     })
   }
 }
+class Board {
+  constructor (spaces) {
+    this.captures = []
+    this.spaces = Chess.getStartingBoard()
+  }
+
+   get pieces () {
+     return this.spaces.map((space) => {
+       return space.piece
+     }).concat(this.captures)
+   }
+
+  move (currentSpace, newSpace) {
+    if (this.spaceAvailable(currentSpace, newSpace)) {
+      this.capture(newSpace)
+      this.setPieces(currentSpace, newSpace)
+    }
+    return this
+  }
+
+  setPieces (currentSpace, newSpace) {
+    var currentPiece = currentSpace.piece
+    newSpace.piece = currentPiece
+    currentSpace.piece = new NullPiece()
+    return this
+  }
+
+  capture (newSpace) {
+    this.captures = this.captures.concat([newSpace.piece])
+    return this
+  }
+
+  spaceAvailable (currentSpace, newSpace) {
+    return (this.availableSpacesFor(currentSpace).includes(newSpace))
+  }
+
+  availableSpacesFor (currentSpace) {
+    var piece = currentSpace.piece
+    return this.spaces.filter((space) => {
+      return piece.validMove(currentSpace, space)
+    })
+  }
+
+  static EmptyRows () {
+    return Array.apply(null, Array(32))
+  }
+}
 
 class Space {
   constructor (index, piece) {
@@ -68,7 +110,6 @@ class NullPiece {
   constructor () {
     this.color = null
     this.render = ''
-    this.availableSpaces = []
   }
 }
 
@@ -80,16 +121,26 @@ class Piece {
   get render () {
     return ''
   }
+  validMove (currentSpace, newSpace) {
+    return true
+  }
 }
 
 class WhitePawn extends Piece {
   get render () {
     return '♙'
   }
+  validMove (currentSpace, newSpace) {
+    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 2)
+  }
 }
+
 class BlackPawn extends Piece {
   get render () {
     return '♟'
+  }
+  validMove (currentSpace, newSpace) {
+    return (currentSpace.row === newSpace.row && currentSpace.column < newSpace.column + 2)
   }
 }
 
@@ -152,4 +203,4 @@ class BlackKing extends Piece {
   }
 }
 
-export {Board, Piece, NullPiece, Space}
+export {Chess, Board, Piece, NullPiece, Space}

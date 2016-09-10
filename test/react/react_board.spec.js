@@ -8,15 +8,17 @@ import { readFileSync } from 'fs'
 import ReactBoard from '../../src/react/board'
 
 const GetHTML = (fileName) => {
-  return readFileSync(`/Users/cwdrappier/projects/chess/source/chess/test/react/fixtures/${fileName}.html`, 'utf-8').slice(0, -1)
+  return readFileSync(`./test/react/fixtures/${fileName}.html`, 'utf-8').slice(0, -1)
 }
 
 const RendersBoardLike = (board, fileName) => {
-  it('renders board correctly', () => {
+  it(`renders board like ${fileName}`, () => {
     expect(board.toString()).to.equal(GetHTML(fileName))
   })
 }
 describe('<ReactBoard />', () => {
   const board = render(<ReactBoard />)
-  RendersBoardLike(board, 'starting_board')
+  describe('starting position', () => {
+    RendersBoardLike(board, 'starting_board')
+  })
 })

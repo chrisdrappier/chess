@@ -13,6 +13,44 @@ const AssertPieceCount = (board, count, type) => {
   assert.strictEqual(pieces.length, count)
 }
 
+const PerformValidMove = (board, current, target) => {
+  var currentSpace = board.spaces[current]
+  var newSpace = board.spaces[target]
+  var capture = newSpace.piece
+  var currentPiece = currentSpace.piece
+  board.move(currentSpace, newSpace)
+  describe(`move from ${current} to ${target}`, () => {
+    it(`vacates ${current}`, () => {
+      expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
+    })
+
+    it(`moves to ${target}`, () => {
+      expect(newSpace.piece).to.equal(currentPiece)
+    })
+
+    it(`captures piece on ${target}`, () => {
+      expect(board.captures).to.include(capture)
+    })
+  })
+}
+
+const PerformInvalidMove = (board, current, target) => {
+  var currentSpace = board.spaces[current]
+  var newSpace = board.spaces[target]
+  var capture = newSpace.piece
+  var currentPiece = currentSpace.piece
+  board.move(currentSpace, newSpace)
+  describe(`do not move from ${current} to ${target}`, () => {
+    it('does not move', () => {
+      expect(currentSpace.piece).to.equal(currentPiece)
+    })
+
+    it('does not capture', () => {
+      expect(newSpace.piece).to.equal(capture)
+    })
+  })
+}
+
 describe('Piece', () => {
   var piece = new Piece('white')
 
@@ -73,23 +111,9 @@ describe('Board', () => {
   })
 
   describe('move', () => {
-    describe('0,63', () => {
-      var capture = board.spaces[63].piece
-      var currentPiece = board.spaces[0].piece
-      board.move(board.spaces[0], board.spaces[63])
-      var currentSpace = board.spaces[0]
-      var newSpace = board.spaces[63]
-      it('vacates the current space', () => {
-        expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
-      })
-
-      it('moves to the new space', () => {
-        expect(newSpace.piece).to.equal(currentPiece)
-      })
-
-      it('captures piece on new space', () => {
-        expect(board.captures).to.include(capture)
-      })
+    describe('when board is new', () => {
+      PerformValidMove(new Board(), 51, 35)
+      // PerformInvalidMove(new Board(), 51, 22)
     })
   })
 })
