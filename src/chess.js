@@ -76,6 +76,12 @@ class Board {
     // })
     this.spaces = spaces
   }
+
+  get pieces () {
+    return this.spaces.map((space) => {
+      return space.piece
+    })
+  }
 }
 
 class Space {
