@@ -7,54 +7,24 @@ class Chess {
     this.board = new Board()
     this.captures = []
   }
+}
 
-  get pieces () {
-    return this.board.spaces.map((space) => {
-      return space.piece
-    }).concat(this.captures)
-  }
+class Move {
+  constructor (currentSpace, newSpace) {
 
-  static getStartingSpaces () {
-    return Chess.BlackBackRow().concat(
-    Chess.BlackPawns()).concat(
-    Board.EmptyRows()).concat(
-    Chess.WhitePawns()).concat(
-    Chess.WhiteBackRow()).map((piece, index) => {
-      return new Space(index, piece)
-    })
-  }
-
-  static WhiteBackRow () {
-    var minorPieces = [new WhiteRook(), new WhiteKnight(), new WhiteBishop()]
-    return minorPieces.concat([new WhiteQueen(), new WhiteKing()]).concat(minorPieces.reverse())
-  }
-  static WhitePawns () {
-    return MapAll(8, (val, index) => {
-      return new WhitePawn()
-    })
-  }
-
-  static BlackBackRow () {
-    var minorPieces = [new BlackRook(), new BlackKnight(), new BlackBishop()]
-    return minorPieces.concat([new BlackQueen(), new BlackKing()]).concat(minorPieces.reverse())
-  }
-  static BlackPawns () {
-    return MapAll(8, (val, index) => {
-      return new BlackPawn()
-    })
   }
 }
 class Board {
-  constructor (spaces = Chess.getStartingSpaces()) {
-    this.captures = []
+  constructor (spaces = StartingSpaces()) {
     this.spaces = spaces
+    this.captures = []
   }
 
-   get pieces () {
-     return this.spaces.map((space) => {
-       return space.piece
-     }).concat(this.captures)
-   }
+  get pieces () {
+    return this.spaces.map((space) => {
+      return space.piece
+    })
+  }
 
   move (currentSpace, newSpace) {
     if (this.spaceAvailable(currentSpace, newSpace)) {
@@ -85,10 +55,6 @@ class Board {
     return this.spaces.filter((space) => {
       return piece.validMove(currentSpace, space)
     })
-  }
-
-  static EmptyRows () {
-    return Array.apply(null, Array(32))
   }
 }
 
@@ -203,4 +169,41 @@ class BlackKing extends Piece {
   }
 }
 
-export {Chess, Board, Piece, NullPiece, Space}
+
+const EmptyRows = () => {
+  return Array.apply(null, Array(32))
+}
+
+const BlackPawns = () => {
+  return MapAll(8, (val, index) => {
+    return new BlackPawn()
+  })
+}
+
+const BlackBackRow = () => {
+  var minorPieces = [new BlackRook(), new BlackKnight(), new BlackBishop()]
+  return minorPieces.concat([new BlackQueen(), new BlackKing()]).concat(minorPieces.reverse())
+}
+
+const WhitePawns = () => {
+  return MapAll(8, (val, index) => {
+    return new WhitePawn()
+  })
+}
+
+const WhiteBackRow = () => {
+  var minorPieces = [new WhiteRook(), new WhiteKnight(), new WhiteBishop()]
+  return minorPieces.concat([new WhiteQueen(), new WhiteKing()]).concat(minorPieces.reverse())
+}
+
+const StartingSpaces = () => {
+  return BlackBackRow().concat(
+  BlackPawns()).concat(
+  EmptyRows()).concat(
+  WhitePawns()).concat(
+  WhiteBackRow()).map((piece, index) => {
+    return new Space(index, piece)
+  })
+}
+
+export {Chess, Move, Board, Piece, NullPiece, Space}

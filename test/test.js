@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
-import { Board, Space, Piece } from '../src/chess'
+import { Chess, Board, Space, Piece } from '../src/chess'
 
 const FilterByType = (board, type) => {
   return board.pieces.filter((piece) => {
