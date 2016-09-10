@@ -8,8 +8,8 @@ const FilterByType = (board, type) => {
   })
 }
 
-const AssertPieceCount = (board, count, type) => {
-  var pieces = FilterByType(board, type)
+const AssertPieceCount = (chess, count, type) => {
+  var pieces = FilterByType(chess, type)
   assert.strictEqual(pieces.length, count)
 }
 
@@ -83,11 +83,6 @@ describe('Space', () => {
 describe('Chess', () => {
   var chess = new Chess()
   describe('pieces', () => {
-    console.log('--------------------------------------')
-    console.log(chess.pieces.map((piece) => {
-      piece.constructor.name
-    }))
-    console.log('--------------------------------------')
     it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn') })
     it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'BlackPawn') })
     it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'BlackRook') })
@@ -115,21 +110,6 @@ describe('Chess', () => {
         return piece.constructor.name !== 'NullPiece'
       })
       assert.strictEqual(spaces.length, 32)
-    })
-
-    describe('pieces', () => {
-      it('has 8 white pawns', () => { AssertPieceCount(board, 8, 'WhitePawn') })
-      it('has 8 black pawns', () => { AssertPieceCount(board, 8, 'BlackPawn') })
-      it('has 2 black rooks', () => { AssertPieceCount(board, 2, 'BlackRook') })
-      it('has 2 white rooks', () => { AssertPieceCount(board, 2, 'WhiteRook') })
-      it('has 2 black bishops', () => { AssertPieceCount(board, 2, 'BlackBishop') })
-      it('has 2 white bishops', () => { AssertPieceCount(board, 2, 'WhiteBishop') })
-      it('has 2 black knights', () => { AssertPieceCount(board, 2, 'BlackKnight') })
-      it('has 2 white knights', () => { AssertPieceCount(board, 2, 'WhiteKnight') })
-      it('has 1 black king', () => { AssertPieceCount(board, 1, 'BlackKing') })
-      it('has 1 white king', () => { AssertPieceCount(board, 1, 'WhiteKing') })
-      it('has 1 black queen', () => { AssertPieceCount(board, 1, 'BlackQueen') })
-      it('has 1 white queen', () => { AssertPieceCount(board, 1, 'WhiteQueen') })
     })
   })
   describe('move', () => {

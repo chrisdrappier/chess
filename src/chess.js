@@ -2,31 +2,15 @@ class Chess {
   constructor () {
     this.board = new Board()
     this.captures = []
-    this.pieces = Chess.allPieces
   }
 
-  static get allPieces () {
-    return WhitePawn.defaultPieces.concat(
-    WhiteRook.defaultPieces).concat(
-    WhiteBishop.defaultPieces).concat(
-    WhiteKnight.defaultPieces).concat(
-    WhiteKing.defaultPieces).concat(
-    WhiteQueen.defaultPieces).concat(
-    BlackPawn.defaultPieces).concat(
-    BlackRook.defaultPieces).concat(
-    BlackBishop.defaultPieces).concat(
-    BlackKnight.defaultPieces).concat(
-    BlackKing.defaultPieces).concat(
-    BlackQueen.defaultPieces)
+  get pieces () {
+    return this.board.spaces.map((space) => {
+      return space.piece
+    }).concat(this.captures).filter((piece) => {
+      return piece.constructor !== 'NullPiece'
+    })
   }
-
-  // get pieces () {
-  //   return this.board.spaces.map((space) => {
-  //     return space.piece
-  //   }).concat(this.captures).filter((piece) => {
-  //     return piece.constructor !== 'NullPiece'
-  //   })
-  // }
 
   move (currentSpace, newSpace) {
     new Move(this, currentSpace, newSpace).execute()
@@ -71,9 +55,6 @@ class Move {
 
 class Board {
   constructor (spaces = StartingSpaces()) {
-    // this.spaces = Array.apply(null, new Array(64)).map((index) => {
-    //   return new Space(index)
-    // })
     this.spaces = spaces
   }
 
@@ -96,6 +77,7 @@ class Space {
 }
 
 class NullPiece {
+  constructor (index) { this.index = index }
   get color () { return null }
   get render () { return '' }
 
@@ -202,32 +184,35 @@ class BlackKing extends Piece {
   get render () { return '♚' }
 }
 
-const EmptyRows = () => { return Array.apply(null, Array(32)) }
-
-const BlackPawns = () => {
-  return BlackPawn.defaultPieces
+const EmptyRows = () => {
+  return Array.apply(null, Array(32))
 }
 
-const WhitePawns = () => {
-  return WhitePawn.defaultPieces
+const BlackPieces = () => {
+  return BlackBishop.defaultPieces.concat(
+         BlackRook.defaultPieces).concat(
+         BlackKnight.defaultPieces).concat(
+         BlackQueen.defaultPieces).concat(
+         BlackKing.defaultPieces).concat(
+         BlackPawn.defaultPieces).sort((prev, cur) => {
+           return prev.index - cur.index
+         })
 }
 
-const BlackBackRow = () => {
-  var minorPieces = [new BlackRook(), new BlackKnight(), new BlackBishop()]
-  return minorPieces.concat([new BlackQueen(), new BlackKing()]).concat(minorPieces.reverse())
+const WhitePieces = () => {
+  return WhiteBishop.defaultPieces.concat(
+         WhiteRook.defaultPieces).concat(
+         WhiteKnight.defaultPieces).concat(
+         WhiteQueen.defaultPieces).concat(
+         WhiteKing.defaultPieces).concat(
+         WhitePawn.defaultPieces).sort((prev, cur) => {
+           return prev.index - cur.index
+         })
 }
-
-const WhiteBackRow = () => {
-  var minorPieces = [new WhiteRook(), new WhiteKnight(), new WhiteBishop()]
-  return minorPieces.concat([new WhiteQueen(), new WhiteKing()]).concat(minorPieces.reverse())
-}
-
 const StartingSpaces = () => {
-  return BlackBackRow().concat(
-  BlackPawns()).concat(
+  return BlackPieces().concat(
   EmptyRows()).concat(
-  WhitePawns()).concat(
-  WhiteBackRow()).map((piece, index) => {
+  WhitePieces()).map((piece, index) => {
     return new Space(index, piece)
   })
 }
