@@ -7,21 +7,19 @@
 #moves {
 	border: 1px solid black;
 	height: 450px;
-	width: 200px;
+	width: 100px;
 	float: left;
 }
 
 .space {
-	height : 50px;
-	width : 50px;
-	margin: 0;
-	padding: 0;
 	border: 1px solid black;
 	float: left;
 }
 
 .piece {
-	font-size: 45px;
+	font-size: 44px;
+	border: 1px solid black;
+	text-align: center;
 }
 
 .white {
@@ -30,7 +28,7 @@
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
-    1px 1px 0 #000;  
+    1px 1px 0 #000;
 }
 
 .black {
@@ -38,11 +36,11 @@
 }
 
 .dark {
-	background-color : grey;
+	background-color : #996d54;
 }
 
 .light {
-	background-color : white;
+	background-color : #F1D4B2;
 }
 
 .selected {

@@ -95,19 +95,31 @@ class NullPiece {
   get type () { return new Type() }
 }
 
+class Color {
+
+}
+
+class White extends Color {
+  get color () { return 'white' }
+}
+
+class Black extends Color {
+  get color () { return 'black' }
+}
+
 class Piece {
-  constructor (index, color, type) {
-    this.index = color === 'white' ? index + type.whiteOffset : index
-    this.color = color
+  constructor (index, type, color) {
+    this.colorClass = color
+    this.color = color.color
     this.type = type
+    this.index = this.color === 'white' ? index + type.whiteOffset : index
   }
-  get availableSpaces () { return [] }
   get render () { return this.type.render }
   validMove (currentSpace, newSpace) { return this.type.validMove(currentSpace, newSpace) }
 
-  static defaultPieces (color, type = new Pawn()) {
+  static defaultPieces (color, type) {
     return type.defaults.map((index) => {
-      return new Piece(index, color, type)
+      return new Piece(index, type, color)
     })
   }
 }
@@ -169,9 +181,9 @@ const PiecesFor = (color) => {
 }
 
 const StartingSpaces = () => {
-  return PiecesFor('black').concat(
+  return PiecesFor(new Black()).concat(
          EmptyRows()).concat(
-         PiecesFor('white')).map((piece, index) => {
+         PiecesFor(new White())).map((piece, index) => {
            return new Space(index, piece)
          })
 }
