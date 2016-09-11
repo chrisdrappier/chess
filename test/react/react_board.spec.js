@@ -40,6 +40,14 @@ describe('<ReactBoard />', () => {
       })
     })
 
+    describe('selecting an empty space', () => {
+      const board = mount(<ReactBoard chess={new Chess()} />)
+      board.find('#43').simulate('click')
+      it('does not set selected space', () => {
+        expect(board.state().selectedSpace).to.equal(null)
+      })
+    })
+
     describe('moving the piece', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 35)

@@ -12,10 +12,11 @@ class ReactBoard extends Component {
   setSelectedSpace (selectedSpace) {
     if (this.state.selectedSpace === selectedSpace.index) {
       this.setState({selectedSpace: null, chess: this.state.chess, moves: this.state.moves})
-    } else if (this.state.selectedSpace !== null && selectedSpace && selectedSpace.index > -1) {
+    } else if (this.state.selectedSpace !== null && selectedSpace.index > -1) {
       var newMoves = this.state.moves.slice()
       newMoves.push(`${this.state.selectedSpace} ${selectedSpace.index}`)
       this.setState({selectedSpace: null, moves: newMoves, chess: this.state.chess.move(this.state.selectedSpace, selectedSpace.index)})
+    } else if (this.state.selectedSpace === null && selectedSpace.piece.constructor.name === 'NullPiece') {
     } else {
       this.setState({selectedSpace: selectedSpace.index, chess: this.state.chess, moves: this.state.moves})
     }
