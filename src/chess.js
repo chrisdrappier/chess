@@ -149,16 +149,23 @@ class King extends Type {
   get render () { return '♚' }
 }
 
-const PiecesFor = (color = 'black') => {
-  return [
-    new Bishop(), new Rook(), new Knight(),
-    new Queen(), new King(), new Pawn()
-  ].map((type) => {
+const allTypes = [
+  new Bishop(), new Rook(), new Knight(),
+  new Queen(), new King(), new Pawn()
+]
+
+const reduceConcat = (cur, next) => {
+  return cur.concat(next)
+}
+
+const sortByIndex = (pre, cur) => {
+  return pre.index - cur.index
+}
+
+const PiecesFor = (color) => {
+  return allTypes.map((type) => {
     return Piece.defaultPieces(color, type)
-  }).reduce((cur, next) => { return cur.concat(next) }
-   ).sort((prev, cur) => {
-     return prev.index - cur.index
-   })
+  }).reduce(reduceConcat).sort(sortByIndex)
 }
 
 const StartingSpaces = () => {
