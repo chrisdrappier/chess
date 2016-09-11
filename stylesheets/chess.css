@@ -12,12 +12,16 @@
 }
 
 .space {
+	height: 50px;
+	width: 50px;
 	border: 1px solid black;
 	float: left;
 }
 
 .piece {
-	font-size: 44px;
+	font-size: 35px;
+	height: 50px;
+	width: 50px;
 	border: 1px solid black;
 	text-align: center;
 }
