@@ -57,7 +57,11 @@ class Move {
   get captures () { return this.chess.captures }
   get board () { return this.chess.board }
   get currentPiece () { return this.currentSpace.piece }
-  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) }
+  get spaceAvailable () { return (this.isDifferentColor && this.availableSpaces.includes(this.newSpace)) }
+
+  get isDifferentColor () {
+    return this.currentPiece.color !== this.captured.color
+  }
 
   get availableSpaces () {
     return this.board.spaces.filter((space) => {
@@ -115,7 +119,10 @@ class Piece {
     this.index = this.color === 'white' ? index + type.whiteOffset : index
   }
   get render () { return this.type.render }
-  validMove (currentSpace, newSpace) { return this.type.validMove(currentSpace, newSpace) }
+
+  validMove (currentSpace, newSpace) {
+    return this.type.validMove(currentSpace, newSpace)
+  }
 
   static defaultPieces (color, type) {
     return type.defaults.map((index) => {
@@ -127,7 +134,7 @@ class Piece {
 class Type {
   get whiteOffset () { return 56 }
   validMove (currentSpace, newSpace) {
-    return (true)
+    return (false)
   }
 }
 
@@ -136,7 +143,7 @@ class Pawn extends Type {
   get render () { return '♟' }
   get whiteOffset () { return 24 }
   validMove (currentSpace, newSpace) {
-    return true // (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
+    return true // ([43, 35].includes(newSpace.index))
   }
 }
 

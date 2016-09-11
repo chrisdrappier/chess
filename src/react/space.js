@@ -24,6 +24,7 @@ class ReactSpace extends Component {
         className={this.className}
         id={this.index}
         onClick={() => { this.props.handleClick(this) }}>
+        {this.index}
         {this.pieceComponent}
       </div>
     )

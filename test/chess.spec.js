@@ -105,6 +105,18 @@ describe('Chess', () => {
     it('has 1 white king', () => { AssertPieceCount(chess, 1, 'King', 'white') })
     it('has 1 black queen', () => { AssertPieceCount(chess, 1, 'Queen', 'black') })
     it('has 1 white queen', () => { AssertPieceCount(chess, 1, 'Queen', 'white') })
+
+    it('cannot capture another piece of the same color', () => {
+      var chess = new Chess()
+      AssertInvalidMove(chess, 51, 52)
+    })
+
+    describe('pawn', () => {
+      it('at starting position can move 2 spaces forward', () => {
+        var chess = new Chess ()
+        AssertValidMove(chess, 51, 35)
+      })
+    })
   })
   describe('board', () => {
     var board = chess.board
@@ -125,7 +137,6 @@ describe('Chess', () => {
   describe('move', () => {
     describe('when board is new', () => {
       AssertValidMove(chess, 51, 35)
-      // PerformInvalidMove(chess.board, 51, 22, chess)
     })
   })
 })
