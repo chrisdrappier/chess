@@ -124,7 +124,7 @@ class Pawn extends Type {
   get render () { return '♟' }
   get whiteOffset () { return 24 }
   validMove (currentSpace, newSpace) {
-    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
+    return true // (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
   }
 }
 

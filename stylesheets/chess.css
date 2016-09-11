@@ -26,7 +26,11 @@
 
 .white {
 	color: white;
-	-webkit-text-stroke: 2px solid black;
+	text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
 }
 
 .black {
