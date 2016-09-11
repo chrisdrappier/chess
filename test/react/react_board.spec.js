@@ -32,10 +32,6 @@ describe('<ReactBoard />', () => {
       expect(board.find(ReactSpace)).to.have.length(64)
     })
 
-    it('has only one selected space', () => {
-      expect(board.find('.selected')).to.have.length(1)
-    })
-
     describe('moving the piece', () => {
       simulateMove(board, 51, 35)
       it('populates moves array', () => {

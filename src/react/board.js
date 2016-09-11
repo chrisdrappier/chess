@@ -14,8 +14,9 @@ class ReactBoard extends Component {
       var newMoves = this.state.moves.slice()
       newMoves.push(`${this.state.selectedSpace} ${selectedSpace.index}`)
       this.setState({selectedSpace: null, moves: newMoves, chess: this.state.chess.move(this.state.selectedSpace, selectedSpace.index)})
+    } else {
+      this.setState({selectedSpace: selectedSpace.index, chess: this.state.chess, moves: this.state.moves})
     }
-    this.setState({selectedSpace: selectedSpace.index, chess: this.state.chess})
   }
 
   get chess () { return this.state.chess }
