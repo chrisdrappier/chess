@@ -90,134 +90,87 @@ class Space {
 }
 
 class NullPiece {
-  constructor (index) { this.index = index }
   get color () { return null }
   get render () { return '' }
-
-  validMove (dontUse = null, dontUse2 = null) {
-    return false
-  }
+  get type () { return new Type() }
 }
 
 class Piece {
-  constructor (index) { this.index = index }
-  get availableSpaces () { return [] }
-  get render () { return '' }
-  get space () { return new Space(this.index) }
-  validMove (currentSpace, newSpace) { return true }
-}
-
-class WhiteRook extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () { return [new WhiteRook(56), new WhiteRook(63)] }
-  get render () { return '♖' }
-}
-
-class BlackRook extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () { return [new BlackRook(0), new BlackRook(7)] }
-  get render () { return '♜' }
-}
-
-class WhiteBishop extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () { return [new WhiteBishop(61), new WhiteBishop(58)] }
-  get render () { return '♗' }
-}
-
-class BlackBishop extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () { return [new BlackBishop(5), new BlackBishop(2)] }
-  get render () { return '♝' }
-}
-
-class WhiteKnight extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () { return [new WhiteKnight(57), new WhiteKnight(62)] }
-  get render () { return '♘' }
-}
-
-class BlackKnight extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () { return [new BlackKnight(1), new BlackKnight(6)] }
-  get render () { return '♞' }
-}
-
-class WhiteQueen extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () { return [new WhiteQueen(59)] }
-  get render () { return '♕' }
-}
-
-class BlackQueen extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () { return [new BlackQueen(3)] }
-  get render () { return '♛' }
-}
-
-class WhiteKing extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () { return [new WhiteKing(60)] }
-  get render () { return '♔' }
-}
-
-class BlackKing extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () { return [new BlackKing(4)] }
-  get render () { return '♚' }
-}
-
-const EmptyRows = () => {
-  return Array.apply(null, Array(32))
-}
-class Pawn extends Piece {
-  constructor (startingIndex, color = 'white') {
-    super(startingIndex, color)
+  constructor (index, color, type) {
+    this.index = color === 'white' ? index + type.whiteOffset : index
     this.color = color
-    this.index = color === 'white' ? startingIndex + 24 : startingIndex
+    this.type = type
   }
-  static get defaults () { return [8, 9, 10, 11, 12, 13, 14, 15] }
-  get render () { return '♟' }
+  get availableSpaces () { return [] }
+  get render () { return this.type.render }
+  validMove (currentSpace, newSpace) { return this.type.validMove(currentSpace, newSpace) }
 
-  static defaultPieces (color) {
-    return this.defaults.map((index) => {
-      return new Pawn(index, color)
+  static defaultPieces (color, type = new Pawn()) {
+    return type.defaults.map((index) => {
+      return new Piece(index, color, type)
     })
   }
+}
 
+class Type {
+  get whiteOffset () { return 56 }
+  validMove (currentSpace, newSpace) {
+    return (true)
+  }
+}
+
+class Pawn extends Type {
+  get defaults () { return [8, 9, 10, 11, 12, 13, 14, 15] }
+  get render () { return '♟' }
+  get whiteOffset () { return 24 }
   validMove (currentSpace, newSpace) {
     return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
   }
 }
 
-const WhitePieces = () => {
-  return WhiteBishop.defaultPieces.concat(
-         WhiteRook.defaultPieces).concat(
-         WhiteKnight.defaultPieces).concat(
-         WhiteQueen.defaultPieces).concat(
-         WhiteKing.defaultPieces).concat(
-         Pawn.defaultPieces('white')).sort((prev, cur) => {
-           return prev.index - cur.index
-         })
+class Rook extends Type {
+  get defaults () { return [0, 7] }
+  get render () { return '♜' }
+}
+class Bishop extends Type {
+  get defaults () { return [5, 2] }
+  get render () { return '♝' }
+}
+class Knight extends Type {
+  get defaults () { return [1, 6] }
+  get render () { return '♞' }
+}
+class Queen extends Type {
+  get defaults () { return [3] }
+  get render () { return '♛' }
+}
+class King extends Type {
+  get defaults () { return [4] }
+  get render () { return '♚' }
+}
+
+const PiecesFor = (color = 'black') => {
+  return [
+    new Bishop(), new Rook(), new Knight(),
+    new Queen(), new King(), new Pawn()
+  ].map((type) => {
+    return Piece.defaultPieces(color, type)
+  }).reduce((cur, next) => { return cur.concat(next) }
+   ).sort((prev, cur) => {
+     return prev.index - cur.index
+   })
 }
 
 const StartingSpaces = () => {
-  return BlackPieces().concat(
+  return PiecesFor('black').concat(
          EmptyRows()).concat(
-         WhitePieces()).map((piece, index) => {
+         PiecesFor('white')).map((piece, index) => {
            return new Space(index, piece)
          })
 }
 
-const BlackPieces = () => {
-  return BlackBishop.defaultPieces.concat(
-         BlackRook.defaultPieces).concat(
-         BlackKnight.defaultPieces).concat(
-         BlackQueen.defaultPieces).concat(
-         BlackKing.defaultPieces).concat(
-         Pawn.defaultPieces('black')).sort((prev, cur) => {
-           return prev.index - cur.index
-         })
+const EmptyRows = () => {
+  return Array.apply(null, Array(32))
 }
 
 export {Chess, Move, Board, Piece, NullPiece, Space}

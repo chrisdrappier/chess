@@ -1,11 +1,11 @@
 import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
-import { Chess, Space, Piece } from '../src/chess'
+import { Chess, Space } from '../src/chess'
 
 const FilterByType = (board, type, color = null) => {
   return board.pieces.filter((piece) => {
     if (color) {
-      return piece.constructor.name === type && piece.color === color
+      return (piece.type.constructor.name === type || piece.constructor.name === type) && piece.color === color
     } else {
       return piece.constructor.name === type
     }
@@ -57,14 +57,6 @@ const AssertInvalidMove = (chess, current, target) => {
   })
 }
 
-describe('Piece', () => {
-  var piece = new Piece('white')
-
-  it('renders', () => {
-    assert(piece.render === '')
-  })
-})
-
 describe('Space', () => {
   var space = new Space(0)
 
@@ -103,16 +95,16 @@ describe('Chess', () => {
   describe('pieces', () => {
     it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'Pawn', 'white') })
     it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'Pawn', 'black') })
-    it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'BlackRook') })
-    it('has 2 white rooks', () => { AssertPieceCount(chess, 2, 'WhiteRook') })
-    it('has 2 black bishops', () => { AssertPieceCount(chess, 2, 'BlackBishop') })
-    it('has 2 white bishops', () => { AssertPieceCount(chess, 2, 'WhiteBishop') })
-    it('has 2 black knights', () => { AssertPieceCount(chess, 2, 'BlackKnight') })
-    it('has 2 white knights', () => { AssertPieceCount(chess, 2, 'WhiteKnight') })
-    it('has 1 black king', () => { AssertPieceCount(chess, 1, 'BlackKing') })
-    it('has 1 white king', () => { AssertPieceCount(chess, 1, 'WhiteKing') })
-    it('has 1 black queen', () => { AssertPieceCount(chess, 1, 'BlackQueen') })
-    it('has 1 white queen', () => { AssertPieceCount(chess, 1, 'WhiteQueen') })
+    it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'Rook', 'black') })
+    it('has 2 white rooks', () => { AssertPieceCount(chess, 2, 'Rook', 'white') })
+    it('has 2 black bishops', () => { AssertPieceCount(chess, 2, 'Bishop', 'black') })
+    it('has 2 white bishops', () => { AssertPieceCount(chess, 2, 'Bishop', 'white') })
+    it('has 2 black knights', () => { AssertPieceCount(chess, 2, 'Knight', 'black') })
+    it('has 2 white knights', () => { AssertPieceCount(chess, 2, 'Knight', 'black') })
+    it('has 1 black king', () => { AssertPieceCount(chess, 1, 'King', 'black') })
+    it('has 1 white king', () => { AssertPieceCount(chess, 1, 'King', 'white') })
+    it('has 1 black queen', () => { AssertPieceCount(chess, 1, 'Queen', 'black') })
+    it('has 1 white queen', () => { AssertPieceCount(chess, 1, 'Queen', 'white') })
   })
   describe('board', () => {
     var board = chess.board

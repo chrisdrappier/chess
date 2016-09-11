@@ -22,7 +22,7 @@ describe('<ReactBoard />', () => {
   describe('snapshot comparison', () => {
     const board = render(<ReactBoard chess={new Chess()} moves={[]} />)
     it('matches snapshot when rendered', () => {
-      // expect(board.toString()).to.equal(GetHTML('starting_board'))
+      expect(board.toString()).to.equal(GetHTML('starting_board'))
     })
   })
 
