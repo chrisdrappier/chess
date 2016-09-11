@@ -113,6 +113,14 @@ class Piece {
   validMove (currentSpace, newSpace) { return true }
 }
 
+class White {
+  get color () { return 'white' }
+}
+
+class Black {
+  get color () { return 'black' }
+}
+
 class WhitePawn extends Piece {
   get color () { return 'white' }
   static get defaultPieces () {
@@ -197,22 +205,14 @@ class BlackQueen extends Piece {
   get render () { return '♛' }
 }
 
-class White {
-  get color () { return 'white' }
-}
-
-class Black {
-  get color () { return 'black' }
-}
-
 class WhiteKing extends Piece {
-  get color () { return new White().color }
+  get color () { return 'white' }
   static get defaultPieces () { return [new WhiteKing(60)] }
   get render () { return '♔' }
 }
 
 class BlackKing extends Piece {
-  get color () { return new Black().color }
+  get color () { return 'black' }
   static get defaultPieces () { return [new BlackKing(4)] }
   get render () { return '♚' }
 }
