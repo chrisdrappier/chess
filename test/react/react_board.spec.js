@@ -13,6 +13,11 @@ const GetHTML = (fileName) => {
   return readFileSync(`./test/react/fixtures/${fileName}.html`, 'utf-8').slice(0, -1)
 }
 
+const simulateMove = (board, current, target) => {
+  board.find(`#${current}`).simulate('click')
+  board.find(`#${target}`).simulate('click')
+}
+
 describe('<ReactBoard />', () => {
   describe('render', () => {
     const board = render(<ReactBoard chess={new Chess()} />)
@@ -26,11 +31,21 @@ describe('<ReactBoard />', () => {
     it('has 64 spaces', () => {
       expect(board.find(ReactSpace)).to.have.length(64)
     })
-    it('sets selectedSpace when clicked', () => {
-      var space = board.find('#26')
-      expect(board.state().selectedSpace).to.equal(null)
-      space.simulate('click')
-      expect(board.state().selectedSpace).to.equal(26)
+
+    it('has only one selected space', () => {
+      expect(board.find('.selected')).to.have.length(1)
+    })
+
+    describe('moving the piece', () => {
+      simulateMove(board, 51, 35)
+      it('populates moves array', () => {
+        expect(board.state().moves).to.have.length(1)
+      })
+
+      it('sets the value of the new square', () => {
+        expect(board.find('#35').html()).to.contain('♙')
+        expect(board.find('#51').html()).to.not.contain('♙')
+      })
     })
   })
 })

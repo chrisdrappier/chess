@@ -12,8 +12,16 @@ class Chess {
     })
   }
 
-  move (currentSpace, newSpace) {
+  move (currentIndex, newIndex) {
+    console.log('-----------------------------------------------------------------------------------------------')
+    console.log('moving')
+    var currentSpace = this.board.spaces[currentIndex]
+    console.log(currentIndex)
+    var newSpace = this.board.spaces[newIndex]
+    console.log(newIndex)
     new Move(this, currentSpace, newSpace).execute()
+    console.log('-----------------------------------------------------------------------------------------------')
+    return this
   }
 }
 
@@ -32,6 +40,7 @@ class Move {
   }
 
   setPieces () {
+    console.log(this.currentPiece)
     this.newSpace.piece = this.currentPiece
     this.currentSpace.piece = new NullPiece()
   }
@@ -44,7 +53,7 @@ class Move {
   get captures () { return this.chess.captures }
   get board () { return this.chess.board }
   get currentPiece () { return this.currentSpace.piece }
-  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) }
+  get spaceAvailable () { return true } // this.availableSpaces.includes(this.newSpace)
 
   get availableSpaces () {
     return this.board.spaces.filter((space) => {

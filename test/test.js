@@ -19,7 +19,7 @@ const PerformValidMove = (chess, current, target) => {
   var newSpace = board.spaces[target]
   var capture = newSpace.piece
   var currentPiece = currentSpace.piece
-  chess.move(currentSpace, newSpace)
+  chess.move(current, target)
   describe(`move from ${current} to ${target}`, () => {
     it(`vacates ${current}`, () => {
       expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
