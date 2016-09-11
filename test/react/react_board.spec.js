@@ -42,9 +42,16 @@ describe('<ReactBoard />', () => {
         expect(board.state().moves).to.have.length(1)
       })
 
-      it('sets the value of the new square', () => {
+      it('sets the value of the new space', () => {
         expect(board.find('#35').html()).to.contain('♙')
+      })
+
+      it('unsets the value of the old space', () => {
         expect(board.find('#51').html()).to.not.contain('♙')
+      })
+
+      it('unsets the selectedSpace', () => {
+        expect(board.state().selectedSpace).to.equal(null)
       })
     })
   })

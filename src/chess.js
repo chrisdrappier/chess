@@ -13,14 +13,9 @@ class Chess {
   }
 
   move (currentIndex, newIndex) {
-    console.log('-----------------------------------------------------------------------------------------------')
-    console.log('moving')
     var currentSpace = this.board.spaces[currentIndex]
-    console.log(currentIndex)
     var newSpace = this.board.spaces[newIndex]
-    console.log(newIndex)
     new Move(this, currentSpace, newSpace).execute()
-    console.log('-----------------------------------------------------------------------------------------------')
     return this
   }
 }
@@ -40,7 +35,6 @@ class Move {
   }
 
   setPieces () {
-    console.log(this.currentPiece)
     this.newSpace.piece = this.currentPiece
     this.currentSpace.piece = new NullPiece()
   }
