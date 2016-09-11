@@ -27,12 +27,21 @@ describe('<ReactBoard />', () => {
   })
 
   describe('mount', () => {
-    const board = mount(<ReactBoard chess={new Chess()} />)
     it('has 64 spaces', () => {
+      const board = mount(<ReactBoard chess={new Chess()} />)
       expect(board.find(ReactSpace)).to.have.length(64)
     })
 
+    describe('unselecting the piece', () => {
+      const board = mount(<ReactBoard chess={new Chess()} />)
+      simulateMove(board, 51, 51)
+      it('does not populate moves array', () => {
+        expect(board.state().moves).to.have.length(0)
+      })
+    })
+
     describe('moving the piece', () => {
+      const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 35)
       it('populates moves array', () => {
         expect(board.state().moves).to.have.length(1)
