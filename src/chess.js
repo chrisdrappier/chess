@@ -2,6 +2,7 @@ class Chess {
   constructor () {
     this.board = new Board()
     this.captures = []
+    this.turn = 'white'
   }
 
   get pieces () {
