@@ -13,7 +13,7 @@ const AssertPieceCount = (chess, count, type) => {
   assert.strictEqual(pieces.length, count)
 }
 
-const PerformValidMove = (chess, current, target) => {
+const AssertValidMove = (chess, current, target) => {
   var board = chess.board
   var currentSpace = board.spaces[current]
   var newSpace = board.spaces[target]
@@ -35,12 +35,13 @@ const PerformValidMove = (chess, current, target) => {
   })
 }
 
-const PerformInvalidMove = (board, current, target) => {
+const AssertInvalidMove = (chess, current, target) => {
+  var board = chess.board
   var currentSpace = board.spaces[current]
   var newSpace = board.spaces[target]
   var capture = newSpace.piece
   var currentPiece = currentSpace.piece
-  board.move(currentSpace, newSpace)
+  chess.move(current, target)
   describe(`do not move from ${current} to ${target}`, () => {
     it('does not move', () => {
       expect(currentSpace.piece).to.equal(currentPiece)
@@ -82,6 +83,19 @@ describe('Space', () => {
 
 describe('Chess', () => {
   var chess = new Chess()
+
+  describe('turns', () => {
+    var chess = new Chess()
+    it('passes turn after successful move', () => {
+      chess.move(51, 35)
+      expect(chess.turn).to.equal('black')
+    })
+
+    it('does not allow move unless its colors turn', () => {
+      AssertInvalidMove(chess, 52, 36)
+    })
+  })
+
   describe('pieces', () => {
     it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn') })
     it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'BlackPawn') })
@@ -114,7 +128,7 @@ describe('Chess', () => {
   })
   describe('move', () => {
     describe('when board is new', () => {
-      PerformValidMove(chess, 51, 35)
+      AssertValidMove(chess, 51, 35)
       // PerformInvalidMove(chess.board, 51, 22, chess)
     })
   })

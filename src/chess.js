@@ -5,6 +5,10 @@ class Chess {
     this.turn = 'white'
   }
 
+  passTurn () {
+    this.turn = this.turn === 'white' ? 'black' : 'white'
+  }
+
   get pieces () {
     return this.board.spaces.map((space) => {
       return space.piece
@@ -29,9 +33,10 @@ class Move {
   }
 
   execute () {
-    if (this.spaceAvailable) {
+    if (this.turn && this.spaceAvailable) {
       this.capture()
       this.setPieces()
+      this.chess.passTurn()
     }
   }
 
@@ -44,11 +49,15 @@ class Move {
     this.captures.push(this.captured)
   }
 
+  get turn () {
+    return (this.currentPiece.color === this.chess.turn)
+  }
+
   get captured () { return this.newSpace.piece }
   get captures () { return this.chess.captures }
   get board () { return this.chess.board }
   get currentPiece () { return this.currentSpace.piece }
-  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) } // this.availableSpaces.includes(this.newSpace)
+  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) }
 
   get availableSpaces () {
     return this.board.spaces.filter((space) => {
@@ -105,6 +114,7 @@ class Piece {
 }
 
 class WhitePawn extends Piece {
+  get color () { return 'white' }
   static get defaultPieces () {
     return [new WhitePawn(32),
             new WhitePawn(33),
@@ -122,6 +132,7 @@ class WhitePawn extends Piece {
 }
 
 class BlackPawn extends Piece {
+  get color () { return 'black' }
   static get defaultPieces () {
     return [new BlackPawn(8),
             new BlackPawn(9),
@@ -139,51 +150,69 @@ class BlackPawn extends Piece {
 }
 
 class WhiteRook extends Piece {
+  get color () { return 'white' }
   static get defaultPieces () { return [new WhiteRook(56), new WhiteRook(63)] }
   get render () { return '♖' }
 }
 
 class BlackRook extends Piece {
+  get color () { return 'black' }
   static get defaultPieces () { return [new BlackRook(0), new BlackRook(7)] }
   get render () { return '♜' }
 }
 
 class WhiteBishop extends Piece {
+  get color () { return 'white' }
   static get defaultPieces () { return [new WhiteBishop(61), new WhiteBishop(58)] }
   get render () { return '♗' }
 }
 
 class BlackBishop extends Piece {
+  get color () { return 'black' }
   static get defaultPieces () { return [new BlackBishop(5), new BlackBishop(2)] }
   get render () { return '♝' }
 }
 
 class WhiteKnight extends Piece {
+  get color () { return 'white' }
   static get defaultPieces () { return [new WhiteKnight(57), new WhiteKnight(62)] }
   get render () { return '♘' }
 }
 
 class BlackKnight extends Piece {
+  get color () { return 'black' }
   static get defaultPieces () { return [new BlackKnight(1), new BlackKnight(6)] }
   get render () { return '♞' }
 }
 
 class WhiteQueen extends Piece {
+  get color () { return 'white' }
   static get defaultPieces () { return [new WhiteQueen(59)] }
   get render () { return '♕' }
 }
 
 class BlackQueen extends Piece {
+  get color () { return 'black' }
   static get defaultPieces () { return [new BlackQueen(3)] }
   get render () { return '♛' }
 }
 
+class White {
+  get color () { return 'white' }
+}
+
+class Black {
+  get color () { return 'black' }
+}
+
 class WhiteKing extends Piece {
+  get color () { return new White().color }
   static get defaultPieces () { return [new WhiteKing(60)] }
   get render () { return '♔' }
 }
 
 class BlackKing extends Piece {
+  get color () { return new Black().color }
   static get defaultPieces () { return [new BlackKing(4)] }
   get render () { return '♚' }
 }

@@ -6,11 +6,11 @@ import ReactMoves from './moves'
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { chess: new Chess() }
+    this.state = { chess: new Chess(), moves: [] }
   }
 
   get chess () { return this.state.chess }
-  get moves () { this.state.chess.moves }
+  get moves () { return this.state.moves }
 
   render () {
     return (

@@ -6,8 +6,14 @@ class ReactMoves extends Component {
     this.state = {}
   }
 
+  get moveComponents () {
+    return this.props.moves.map((move) => {
+      return <div id={move} className="move">{move}</div>
+    })
+  }
+
   render () {
-    return <div id="moves"></div>
+    return <div id="moves">{this.moveComponents}</div>
   }
 }
 
