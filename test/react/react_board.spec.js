@@ -20,7 +20,7 @@ const simulateMove = (board, current, target) => {
 
 describe('<ReactBoard />', () => {
   describe('snapshot comparison', () => {
-    const board = render(<ReactBoard chess={new Chess()} />)
+    const board = render(<ReactBoard chess={new Chess()} moves={[]} />)
     it('matches snapshot when rendered', () => {
       expect(board.toString()).to.equal(GetHTML('starting_board'))
     })

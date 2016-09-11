@@ -15,7 +15,7 @@ class App extends Component {
   render () {
     return (
       <div>
-        <ReactBoard chess={this.chess} />
+        <ReactBoard chess={this.chess} moves={this.moves} />
         <ReactMoves moves={this.moves} />
       </div>
     )

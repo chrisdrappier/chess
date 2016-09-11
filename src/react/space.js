@@ -23,7 +23,7 @@ class ReactSpace extends Component {
       <div
         className={this.className}
         id={this.index}
-        onClick={() => { this.props.setSelectedSpace(this) }}>
+        onClick={() => { this.props.handleClick(this) }}>
         {this.pieceComponent}
       </div>
     )
