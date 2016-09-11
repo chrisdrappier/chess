@@ -2,9 +2,13 @@ import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
 import { Chess, Space, Piece } from '../src/chess'
 
-const FilterByType = (board, type) => {
+const FilterByType = (board, type, color = null) => {
   return board.pieces.filter((piece) => {
-    return piece.constructor.name === type
+    if (color) {
+      return piece.constructor.name === type && piece.color === color
+    } else {
+      return piece.constructor.name === type
+    }
   })
 }
 
@@ -97,7 +101,8 @@ describe('Chess', () => {
   })
 
   describe('pieces', () => {
-    it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn') })
+    it('has 1 new white pawns', () => { AssertPieceCount(chess, 0, 'Pawn', 'white') })
+    it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn', 'white') })
     it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'BlackPawn') })
     it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'BlackRook') })
     it('has 2 white rooks', () => { AssertPieceCount(chess, 2, 'WhiteRook') })
