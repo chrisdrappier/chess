@@ -1,16 +1,19 @@
 import React from 'react'
-import { render } from 'enzyme'
+import { mount } from 'enzyme'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 
 import App from '../../src/react/app'
+import ReactBoard from '../../src/react/board'
+import ReactMoves from '../../src/react/moves'
 
 describe('<App />', () => {
-  const app = render(<App />)
-  it('has one board', () => {
-    expect(app.find('div#board').length).to.equal(1)
+  const app = mount(<App />)
+  it('has a board', () => {
+    expect(app.find(ReactBoard)).to.have.length(1)
   })
-  it('has one moves container', () => {
-    expect(app.find('div#moves').length).to.equal(1)
+
+  it('has moves', () => {
+    expect(app.find(ReactMoves)).to.have.length(1)
   })
 })

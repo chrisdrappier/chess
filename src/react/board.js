@@ -7,7 +7,6 @@ class ReactBoard extends Component {
   constructor (props) {
     super(props)
     this.state = { selectedSpace: null }
-    this.setSelectedSpace = this.setSelectedSpace.bind(this)
   }
 
   setSelectedSpace (selectedSpace) {
@@ -24,7 +23,7 @@ class ReactBoard extends Component {
         space={space}
         key={space.index}
         selected={this.state.selectedSpace === space.index}
-        setSelectedSpace={this.setSelectedSpace} />
+        setSelectedSpace={this.setSelectedSpace.bind(this)} />
     })
   }
 

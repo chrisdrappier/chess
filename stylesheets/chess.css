@@ -1,6 +1,14 @@
 #board {
 	height: 450px;
 	width: 450px;
+	float: left;
+}
+
+#moves {
+	border: 1px solid black;
+	height: 450px;
+	width: 200px;
+	float: left;
 }
 
 .space {
