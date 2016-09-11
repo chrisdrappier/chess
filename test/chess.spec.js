@@ -12,8 +12,8 @@ const FilterByType = (board, type, color = null) => {
   })
 }
 
-const AssertPieceCount = (chess, count, type) => {
-  var pieces = FilterByType(chess, type)
+const AssertPieceCount = (chess, count, type, color = null) => {
+  var pieces = FilterByType(chess, type, color)
   assert.strictEqual(pieces.length, count)
 }
 
@@ -101,9 +101,8 @@ describe('Chess', () => {
   })
 
   describe('pieces', () => {
-    it('has 1 new white pawns', () => { AssertPieceCount(chess, 0, 'Pawn', 'white') })
-    it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'WhitePawn', 'white') })
-    it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'BlackPawn') })
+    it('has 8 white pawns', () => { AssertPieceCount(chess, 8, 'Pawn', 'white') })
+    it('has 8 black pawns', () => { AssertPieceCount(chess, 8, 'Pawn', 'black') })
     it('has 2 black rooks', () => { AssertPieceCount(chess, 2, 'BlackRook') })
     it('has 2 white rooks', () => { AssertPieceCount(chess, 2, 'WhiteRook') })
     it('has 2 black bishops', () => { AssertPieceCount(chess, 2, 'BlackBishop') })

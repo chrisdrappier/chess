@@ -101,85 +101,10 @@ class NullPiece {
 
 class Piece {
   constructor (index) { this.index = index }
-  static get defaults () { return [] }
-  static get defaultPieces () {
-    return this.defaults.map((index) => {
-      return new Piece(index)
-    })
-  }
   get availableSpaces () { return [] }
   get render () { return '' }
   get space () { return new Space(this.index) }
   validMove (currentSpace, newSpace) { return true }
-}
-
-class White {
-  get color () { return 'white' }
-}
-
-class Black {
-  get color () { return 'black' }
-}
-
-class Pawn {
-  constructor (startingIndex, color = 'white') {
-    this.color = color
-    this.startingIndex = color === 'white' ? startingIndex + 24 : startingIndex
-  }
-  static get defaults () { return [8, 9, 10, 11, 12, 13, 14, 15] }
-  get render () { return '♙' }
-
-  static defaultPieces2 (color) {
-    return this.defaults.map((index) => {
-      return new Pawn(index, color)
-    })
-  }
-  static defaultPieces (color) {
-    return [new WhitePawn(32),
-            new WhitePawn(33),
-            new WhitePawn(34),
-            new WhitePawn(35),
-            new WhitePawn(36),
-            new WhitePawn(37),
-            new WhitePawn(38),
-            new WhitePawn(39)]
-  }
-}
-
-class WhitePawn extends Piece {
-  get color () { return 'white' }
-  static get defaultPieces () {
-    return [new WhitePawn(32),
-            new WhitePawn(33),
-            new WhitePawn(34),
-            new WhitePawn(35),
-            new WhitePawn(36),
-            new WhitePawn(37),
-            new WhitePawn(38),
-            new WhitePawn(39)]
-  }
-  get render () { return '♙' }
-  validMove (currentSpace, newSpace) {
-    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
-  }
-}
-
-class BlackPawn extends Piece {
-  get color () { return 'black' }
-  static get defaultPieces () {
-    return [new BlackPawn(8),
-            new BlackPawn(9),
-            new BlackPawn(10),
-            new BlackPawn(11),
-            new BlackPawn(12),
-            new BlackPawn(13),
-            new BlackPawn(14),
-            new BlackPawn(15)]
-  }
-  get render () { return '♟' }
-  validMove (currentSpace, newSpace) {
-    return (currentSpace.row === newSpace.row && currentSpace.column < newSpace.column + 2)
-  }
 }
 
 class WhiteRook extends Piece {
@@ -245,16 +170,24 @@ class BlackKing extends Piece {
 const EmptyRows = () => {
   return Array.apply(null, Array(32))
 }
+class Pawn extends Piece {
+  constructor (startingIndex, color = 'white') {
+    super(startingIndex, color)
+    this.color = color
+    this.index = color === 'white' ? startingIndex + 24 : startingIndex
+  }
+  static get defaults () { return [8, 9, 10, 11, 12, 13, 14, 15] }
+  get render () { return '♟' }
 
-const BlackPieces = () => {
-  return BlackBishop.defaultPieces.concat(
-         BlackRook.defaultPieces).concat(
-         BlackKnight.defaultPieces).concat(
-         BlackQueen.defaultPieces).concat(
-         BlackKing.defaultPieces).concat(
-         BlackPawn.defaultPieces).sort((prev, cur) => {
-           return prev.index - cur.index
-         })
+  static defaultPieces (color) {
+    return this.defaults.map((index) => {
+      return new Pawn(index, color)
+    })
+  }
+
+  validMove (currentSpace, newSpace) {
+    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
+  }
 }
 
 const WhitePieces = () => {
@@ -263,26 +196,27 @@ const WhitePieces = () => {
          WhiteKnight.defaultPieces).concat(
          WhiteQueen.defaultPieces).concat(
          WhiteKing.defaultPieces).concat(
-         WhitePawn.defaultPieces).sort((prev, cur) => {
+         Pawn.defaultPieces('white')).sort((prev, cur) => {
            return prev.index - cur.index
          })
 }
 
-const PiecesFor = (color) => {
-  return WhiteBishop.defaultPieces.concat(
-         WhiteRook.defaultPieces).concat(
-         WhiteKnight.defaultPieces).concat(
-         WhiteQueen.defaultPieces).concat(
-         WhiteKing.defaultPieces).concat(
-         Pawn.defaultPieces(color)).sort((prev, cur) => {
-           return prev.index - cur.index
-         })
-}
 const StartingSpaces = () => {
   return BlackPieces().concat(
          EmptyRows()).concat(
-         PiecesFor('white')).map((piece, index) => {
+         WhitePieces()).map((piece, index) => {
            return new Space(index, piece)
+         })
+}
+
+const BlackPieces = () => {
+  return BlackBishop.defaultPieces.concat(
+         BlackRook.defaultPieces).concat(
+         BlackKnight.defaultPieces).concat(
+         BlackQueen.defaultPieces).concat(
+         BlackKing.defaultPieces).concat(
+         Pawn.defaultPieces('black')).sort((prev, cur) => {
+           return prev.index - cur.index
          })
 }
 
