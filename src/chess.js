@@ -47,7 +47,7 @@ class Move {
   get captures () { return this.chess.captures }
   get board () { return this.chess.board }
   get currentPiece () { return this.currentSpace.piece }
-  get spaceAvailable () { return true } // this.availableSpaces.includes(this.newSpace)
+  get spaceAvailable () { return this.availableSpaces.includes(this.newSpace) } // this.availableSpaces.includes(this.newSpace)
 
   get availableSpaces () {
     return this.board.spaces.filter((space) => {
@@ -116,7 +116,7 @@ class WhitePawn extends Piece {
   }
   get render () { return '♙' }
   validMove (currentSpace, newSpace) {
-    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 2)
+    return (currentSpace.row === newSpace.row && currentSpace.column >= newSpace.column + 1)
   }
 }
 
