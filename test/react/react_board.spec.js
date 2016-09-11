@@ -19,20 +19,24 @@ const simulateMove = (board, current, target) => {
 }
 
 describe('<ReactBoard />', () => {
-  describe('render', () => {
+  describe('snapshot comparison', () => {
     const board = render(<ReactBoard chess={new Chess()} />)
-    it('renders board like snapshot starting_board', () => {
+    it('matches snapshot when rendered', () => {
       expect(board.toString()).to.equal(GetHTML('starting_board'))
     })
   })
 
-  describe('mount', () => {
+  describe('state', () => {
     it('has 64 spaces', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       expect(board.find(ReactSpace)).to.have.length(64)
     })
 
-    describe('unselecting the piece', () => {
+    it('only allows one move per turn')
+    it('highlights legal moves on selection')
+    it('only allows legal moves')
+
+    describe('when unselecting the piece', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 51)
       it('does not populate moves array', () => {
@@ -40,7 +44,7 @@ describe('<ReactBoard />', () => {
       })
     })
 
-    describe('selecting an empty space', () => {
+    describe('when selecting an empty space', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       board.find('#43').simulate('click')
       it('does not set selected space', () => {
@@ -48,7 +52,7 @@ describe('<ReactBoard />', () => {
       })
     })
 
-    describe('moving the piece', () => {
+    describe('when moving the piece', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 35)
       it('populates moves array', () => {
