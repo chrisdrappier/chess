@@ -2,8 +2,8 @@ import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
 import { Chess, Space } from '../src/chess'
 
-const FilterByType = (board, type, color = null) => {
-  return board.pieces.filter((piece) => {
+const FilterByType = (chess, type, color = null) => {
+  return chess.board.pieces.filter((piece) => {
     if (color) {
       return (piece.type.constructor.name === type || piece.constructor.name === type) && piece.color === color
     } else {
@@ -34,7 +34,7 @@ const AssertValidMove = (chess, current, target) => {
     })
 
     it(`captures piece on ${target}`, () => {
-      expect(chess.captures).to.include(capture)
+      expect(chess.board.captures).to.include(capture)
     })
   })
 }
@@ -113,7 +113,7 @@ describe('Chess', () => {
 
     describe('pawn', () => {
       it('at starting position can move 2 spaces forward', () => {
-        var chess = new Chess ()
+        var chess = new Chess()
         AssertValidMove(chess, 51, 35)
       })
     })

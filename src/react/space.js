@@ -8,7 +8,9 @@ class ReactSpace extends Component {
   get index () { return this.space.index }
   get piece () { return this.space.piece }
 
-  get pieceComponent () { return <ReactPiece piece={this.piece} /> }
+  get pieceComponent () {
+    return <ReactPiece piece={this.piece} />
+  }
 
   get className () {
     var classes = ['space', this.color]
@@ -24,7 +26,7 @@ class ReactSpace extends Component {
         className={this.className}
         id={this.index}
         onClick={() => { this.props.handleClick(this) }}>
-        {this.index}
+        <div className="index">{this.space.column} - {this.space.row} - {this.space.index}</div>
         {this.pieceComponent}
       </div>
     )

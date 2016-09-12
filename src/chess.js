@@ -1,20 +1,11 @@
 class Chess {
   constructor () {
     this.board = new Board()
-    this.captures = []
     this.turn = 'white'
   }
 
   passTurn () {
     this.turn = this.turn === 'white' ? 'black' : 'white'
-  }
-
-  get pieces () {
-    return this.board.spaces.map((space) => {
-      return space.piece
-    }).concat(this.captures).filter((piece) => {
-      return piece.constructor !== 'NullPiece'
-    })
   }
 
   move (currentIndex, newIndex) {
@@ -54,7 +45,7 @@ class Move {
   }
 
   get captured () { return this.newSpace.piece }
-  get captures () { return this.chess.captures }
+  get captures () { return this.chess.board.captures }
   get board () { return this.chess.board }
   get currentPiece () { return this.currentSpace.piece }
   get spaceAvailable () { return (this.isDifferentColor && this.availableSpaces.includes(this.newSpace)) }
@@ -73,11 +64,19 @@ class Move {
 class Board {
   constructor (spaces = StartingSpaces()) {
     this.spaces = spaces
+    this.captures = []
+    this.selectedSpace = null
+  }
+
+  set selectSpace (space) {
+    this.selectedSpace = space
   }
 
   get pieces () {
     return this.spaces.map((space) => {
       return space.piece
+    }).concat(this.captures).filter((piece) => {
+      return piece.constructor !== 'NullPiece'
     })
   }
 }
@@ -89,8 +88,8 @@ class Space {
   }
 
   get color () { return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light' }
-  get column () { return parseInt(this.index / 8) }
-  get row () { return (this.index % 8) }
+  get row () { return parseInt(this.index / 8) }
+  get column () { return (this.index % 8) }
 }
 
 class NullPiece {
@@ -100,7 +99,7 @@ class NullPiece {
 }
 
 class Color {
-
+  factor (num) { return num }
 }
 
 class White extends Color {
@@ -109,6 +108,7 @@ class White extends Color {
 
 class Black extends Color {
   get color () { return 'black' }
+  factor (num) { return num * -1 }
 }
 
 class Piece {
@@ -121,7 +121,7 @@ class Piece {
   get render () { return this.type.render }
 
   validMove (currentSpace, newSpace) {
-    return this.type.validMove(currentSpace, newSpace)
+    return this.type.validMove(currentSpace, newSpace, this.colorClass)
   }
 
   static defaultPieces (color, type) {
@@ -142,8 +142,19 @@ class Pawn extends Type {
   get defaults () { return [8, 9, 10, 11, 12, 13, 14, 15] }
   get render () { return '♟' }
   get whiteOffset () { return 24 }
-  validMove (currentSpace, newSpace) {
-    return true // ([43, 35].includes(newSpace.index))
+  validMove (currentSpace, newSpace, color) {
+    const defaultWithOffset = this.defaults.map((dflt) => { return dflt + this.whiteOffset })
+    const onDefaultSpace = defaultWithOffset.includes(newSpace.index)
+    const path = onDefaultSpace ? [1, 2] : [1]
+    console.log(defaultWithOffset)
+    console.log(newSpace.index)
+    console.log(defaultWithOffset.includes(newSpace.index))
+    console.log(path)
+    console.log(color)
+    console.log(currentSpace.row - newSpace.row)
+    const sameColumn = currentSpace.column === newSpace.column
+    const inPath = path.map(color.factor).includes(currentSpace.row - newSpace.row)
+    return sameColumn && inPath
   }
 }
 
@@ -181,18 +192,24 @@ const sortByIndex = (pre, cur) => {
   return pre.index - cur.index
 }
 
-const PiecesFor = (color) => {
+const unsortedPiecesFor = (color) => {
   return allTypes.map((type) => {
     return Piece.defaultPieces(color, type)
-  }).reduce(reduceConcat).sort(sortByIndex)
+  }).reduce(reduceConcat)
+}
+
+const PiecesFor = (color) => {
+  return unsortedPiecesFor(color).sort(sortByIndex)
 }
 
 const StartingSpaces = () => {
-  return PiecesFor(new Black()).concat(
-         EmptyRows()).concat(
-         PiecesFor(new White())).map((piece, index) => {
-           return new Space(index, piece)
-         })
+  return [PiecesFor(new Black()),
+          EmptyRows(),
+          PiecesFor(new White())]
+          .reduce(reduceConcat)
+          .map((piece, index) => {
+            return new Space(index, piece)
+          })
 }
 
 const EmptyRows = () => {

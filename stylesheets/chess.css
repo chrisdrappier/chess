@@ -16,14 +16,20 @@
 	width: 50px;
 	border: 1px solid black;
 	float: left;
+	position: relative;
 }
 
 .piece {
 	font-size: 35px;
 	height: 50px;
 	width: 50px;
-	border: 1px solid black;
 	text-align: center;
+	position: absolute;
+}
+
+.index {
+	font-size: 10px;
+	position: absolute;
 }
 
 .white {
