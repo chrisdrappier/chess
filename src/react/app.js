@@ -5,16 +5,15 @@ import ReactBoard from './board'
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { chess: new Chess(), moves: [] }
+    this.state = { chess: new Chess() }
   }
 
   get chess () { return this.state.chess }
-  get moves () { return this.state.moves }
 
   render () {
     return (
       <div>
-        <ReactBoard chess={this.chess} moves={this.moves} />
+        <ReactBoard chess={this.chess} />
       </div>
     )
   }

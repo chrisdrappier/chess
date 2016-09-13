@@ -9,7 +9,6 @@ class Chess {
   }
 
   move (currentIndex, newIndex) {
-    console.log("were moving!!!1!!!")
     var currentSpace = this.board.spaces[currentIndex]
     var newSpace = this.board.spaces[newIndex]
     new Move(this, currentSpace, newSpace).execute()
