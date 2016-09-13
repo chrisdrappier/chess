@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Chess } from '../chess'
+import Chess from '../chess'
 import ReactBoard from './board'
-import ReactMoves from './moves'
 
 class App extends Component {
   constructor (props) {
     super(props)
-    console.log("constructing app!!!!!!")
     this.state = { chess: new Chess(), moves: [] }
   }
 
@@ -17,7 +15,6 @@ class App extends Component {
     return (
       <div>
         <ReactBoard chess={this.chess} moves={this.moves} />
-        <ReactMoves moves={this.moves} />
       </div>
     )
   }

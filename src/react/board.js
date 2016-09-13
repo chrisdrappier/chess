@@ -6,19 +6,17 @@ class ReactBoard extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { selectedSpace: null, moves: [], chess: props.chess }
+    this.state = { selectedSpace: null, chess: props.chess }
   }
 
   handleClick (clickedSpace) {
     if (this.selectedSpace === clickedSpace.index) {
-      this.setState({selectedSpace: null, chess: this.chess, moves: this.moves})
+      this.setState({selectedSpace: null, chess: this.chess})
     } else if (this.selectedSpace === null && clickedSpace.piece.constructor.name === 'NullPiece') {
     } else if (this.selectedSpace !== null && clickedSpace.index > -1) {
-      var newMoves = this.moves.slice()
-      newMoves.push(`${this.selectedSpace} ${clickedSpace.index}`)
-      this.setState({selectedSpace: null, moves: newMoves, chess: this.chess.move(this.selectedSpace, clickedSpace.index)})
+      this.setState({selectedSpace: null, chess: this.chess.move(this.selectedSpace, clickedSpace.index)})
     } else {
-      this.setState({selectedSpace: clickedSpace.index, chess: this.chess, moves: this.moves})
+      this.setState({selectedSpace: clickedSpace.index, chess: this.chess})
     }
   }
 

@@ -46,7 +46,7 @@
 
 	__webpack_require__(1);
 	__webpack_require__(1);
-	module.exports = __webpack_require__(170);
+	module.exports = __webpack_require__(169);
 
 
 /***/ },
@@ -19783,13 +19783,11 @@
 
 	var _chess = __webpack_require__(161);
 
+	var _chess2 = _interopRequireDefault(_chess);
+
 	var _board = __webpack_require__(162);
 
 	var _board2 = _interopRequireDefault(_board);
-
-	var _moves = __webpack_require__(169);
-
-	var _moves2 = _interopRequireDefault(_moves);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -19807,8 +19805,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    console.log("constructing app!!!!!!");
-	    _this.state = { chess: new _chess.Chess(), moves: [] };
+	    _this.state = { chess: new _chess2['default'](), moves: [] };
 	    return _this;
 	  }
 
@@ -19819,8 +19816,7 @@
 	        return _react2['default'].createElement(
 	          'div',
 	          null,
-	          _react2['default'].createElement(_board2['default'], { chess: this.chess, moves: this.moves }),
-	          _react2['default'].createElement(_moves2['default'], { moves: this.moves })
+	          _react2['default'].createElement(_board2['default'], { chess: this.chess, moves: this.moves })
 	        );
 	      }
 
@@ -20553,7 +20549,7 @@
 
 	  return EmptyRows;
 	}();
-
+	exports['default'] = Chess;
 	exports.Chess = Chess;
 	exports.Move = Move;
 	exports.Board = Board;
@@ -20599,7 +20595,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (ReactBoard.__proto__ || Object.getPrototypeOf(ReactBoard)).call(this, props));
 
-	    _this.state = { selectedSpace: null, moves: [], chess: props.chess };
+	    _this.state = { selectedSpace: null, chess: props.chess };
 	    return _this;
 	  }
 
@@ -20608,13 +20604,11 @@
 	    value: function () {
 	      function handleClick(clickedSpace) {
 	        if (this.selectedSpace === clickedSpace.index) {
-	          this.setState({ selectedSpace: null, chess: this.chess, moves: this.moves });
+	          this.setState({ selectedSpace: null, chess: this.chess });
 	        } else if (this.selectedSpace === null && clickedSpace.piece.constructor.name === 'NullPiece') {} else if (this.selectedSpace !== null && clickedSpace.index > -1) {
-	          var newMoves = this.moves.slice();
-	          newMoves.push(this.selectedSpace + ' ' + clickedSpace.index);
-	          this.setState({ selectedSpace: null, moves: newMoves, chess: this.chess.move(this.selectedSpace, clickedSpace.index) });
+	          this.setState({ selectedSpace: null, chess: this.chess.move(this.selectedSpace, clickedSpace.index) });
 	        } else {
-	          this.setState({ selectedSpace: clickedSpace.index, chess: this.chess, moves: this.moves });
+	          this.setState({ selectedSpace: clickedSpace.index, chess: this.chess });
 	        }
 	      }
 
@@ -21253,77 +21247,6 @@
 
 /***/ },
 /* 169 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ReactMoves = function (_Component) {
-	  _inherits(ReactMoves, _Component);
-
-	  function ReactMoves(props) {
-	    _classCallCheck(this, ReactMoves);
-
-	    var _this = _possibleConstructorReturn(this, (ReactMoves.__proto__ || Object.getPrototypeOf(ReactMoves)).call(this, props));
-
-	    _this.state = {};
-	    return _this;
-	  }
-
-	  _createClass(ReactMoves, [{
-	    key: "render",
-	    value: function () {
-	      function render() {
-	        return _react2["default"].createElement(
-	          "div",
-	          { id: "moves" },
-	          this.moveComponents
-	        );
-	      }
-
-	      return render;
-	    }()
-	  }, {
-	    key: "moveComponents",
-	    get: function () {
-	      function get() {
-	        return this.props.moves.map(function (move) {
-	          return _react2["default"].createElement(
-	            "div",
-	            { id: move, className: "move" },
-	            move
-	          );
-	        });
-	      }
-
-	      return get;
-	    }()
-	  }]);
-
-	  return ReactMoves;
-	}(_react.Component);
-
-	exports["default"] = ReactMoves;
-
-/***/ },
-/* 170 */
 /***/ function(module, exports) {
 
 	"use strict";

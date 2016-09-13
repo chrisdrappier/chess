@@ -206,5 +206,5 @@ const StartingSpaces = () => {
 const EmptyRows = () => {
   return Array.apply(null, Array(32))
 }
-
+export default Chess
 export {Chess, Move, Board, Piece, NullPiece, Space}
