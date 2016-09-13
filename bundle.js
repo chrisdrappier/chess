@@ -20265,7 +20265,7 @@
 	    key: 'validMove',
 	    value: function () {
 	      function validMove(currentSpace, newSpace) {
-	        return false;
+	        return true;
 	      }
 
 	      return validMove;

@@ -134,7 +134,7 @@ class Piece {
 class Type {
   get whiteOffset () { return 56 }
   validMove (currentSpace, newSpace) {
-    return (false)
+    return (true)
   }
 }
 
