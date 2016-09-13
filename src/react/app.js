@@ -6,6 +6,7 @@ import ReactMoves from './moves'
 class App extends Component {
   constructor (props) {
     super(props)
+    console.log("constructing app!!!!!!")
     this.state = { chess: new Chess(), moves: [] }
   }
 

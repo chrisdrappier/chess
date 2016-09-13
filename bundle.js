@@ -44,7 +44,9 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	__webpack_require__(1);
+	__webpack_require__(1);
+	module.exports = __webpack_require__(170);
 
 
 /***/ },
@@ -61,21 +63,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _chess = __webpack_require__(160);
+	var _app = __webpack_require__(160);
 
-	var _chess2 = _interopRequireDefault(_chess);
+	var _app2 = _interopRequireDefault(_app);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var App = function App() {
-	  var board = new _chess2.default();
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    board.pieces.length
-	  );
-	};
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
+	_reactDom2['default'].render(_react2['default'].createElement(_app2['default'], null), document.querySelector('#container'));
 
 /***/ },
 /* 2 */
@@ -19773,6 +19767,92 @@
 
 /***/ },
 /* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _chess = __webpack_require__(161);
+
+	var _board = __webpack_require__(162);
+
+	var _board2 = _interopRequireDefault(_board);
+
+	var _moves = __webpack_require__(169);
+
+	var _moves2 = _interopRequireDefault(_moves);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_Component) {
+	  _inherits(App, _Component);
+
+	  function App(props) {
+	    _classCallCheck(this, App);
+
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	    console.log("constructing app!!!!!!");
+	    _this.state = { chess: new _chess.Chess(), moves: [] };
+	    return _this;
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function () {
+	      function render() {
+	        return _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(_board2['default'], { chess: this.chess, moves: this.moves }),
+	          _react2['default'].createElement(_moves2['default'], { moves: this.moves })
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }, {
+	    key: 'chess',
+	    get: function () {
+	      function get() {
+	        return this.state.chess;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'moves',
+	    get: function () {
+	      function get() {
+	        return this.state.moves;
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return App;
+	}(_react.Component);
+
+	exports['default'] = App;
+
+/***/ },
+/* 161 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19789,85 +19869,427 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Board = function () {
-	  function Board() {
-	    _classCallCheck(this, Board);
+	var Chess = function () {
+	  function Chess() {
+	    _classCallCheck(this, Chess);
 
-	    this.pieces = Board.white_pawns().concat(Board.black_pawns()).concat(Board.rooks()).concat(Board.bishops()).concat(Board.knights()).concat(Board.kings()).concat(Board.queens());
-	    this.spaces = this.pieces.concat(Array.apply(null, Array(32))).map(function (val, index) {
-	      return new Space(index, val);
-	    });
+	    this.board = new Board();
+	    this.turn = 'white';
 	  }
 
-	  _createClass(Board, null, [{
-	    key: 'white_pawns',
-	    value: function white_pawns() {
-	      return Array.apply(null, Array(8)).map(function (val, index) {
-	        return new Pawn('white');
-	      });
-	    }
+	  _createClass(Chess, [{
+	    key: 'passTurn',
+	    value: function () {
+	      function passTurn() {
+	        this.turn = this.turn === 'white' ? 'black' : 'white';
+	      }
+
+	      return passTurn;
+	    }()
 	  }, {
-	    key: 'black_pawns',
-	    value: function black_pawns() {
-	      return Array.apply(null, Array(8)).map(function (val, index) {
-	        return new Pawn('black');
-	      });
-	    }
+	    key: 'move',
+	    value: function () {
+	      function move(currentIndex, newIndex) {
+	        var currentSpace = this.board.spaces[currentIndex];
+	        var newSpace = this.board.spaces[newIndex];
+	        new Move(this, currentSpace, newSpace).execute();
+	        return this;
+	      }
+
+	      return move;
+	    }()
+	  }]);
+
+	  return Chess;
+	}();
+
+	var Move = function () {
+	  function Move(chess, currentSpace, newSpace) {
+	    _classCallCheck(this, Move);
+
+	    this.currentSpace = currentSpace;
+	    this.newSpace = newSpace;
+	    this.chess = chess;
+	  }
+
+	  _createClass(Move, [{
+	    key: 'execute',
+	    value: function () {
+	      function execute() {
+	        if (this.turn && this.spaceAvailable) {
+	          this.capture();
+	          this.setPieces();
+	          this.chess.passTurn();
+	        }
+	      }
+
+	      return execute;
+	    }()
 	  }, {
-	    key: 'rooks',
-	    value: function rooks() {
-	      return [new Rook('white'), new Rook('black'), new Rook('white'), new Rook('black')];
-	    }
+	    key: 'setPieces',
+	    value: function () {
+	      function setPieces() {
+	        this.newSpace.piece = this.currentPiece;
+	        this.currentSpace.piece = new NullPiece();
+	      }
+
+	      return setPieces;
+	    }()
 	  }, {
-	    key: 'bishops',
-	    value: function bishops() {
-	      return [new Bishop('white'), new Bishop('black'), new Bishop('white'), new Bishop('black')];
-	    }
+	    key: 'capture',
+	    value: function () {
+	      function capture() {
+	        this.captures.push(this.captured);
+	      }
+
+	      return capture;
+	    }()
 	  }, {
-	    key: 'knights',
-	    value: function knights() {
-	      return [new Knight('white'), new Knight('black'), new Knight('white'), new Knight('black')];
-	    }
+	    key: 'turn',
+	    get: function () {
+	      function get() {
+	        return this.currentPiece.color === this.chess.turn;
+	      }
+
+	      return get;
+	    }()
 	  }, {
-	    key: 'kings',
-	    value: function kings() {
-	      return [new King('black'), new King('white')];
-	    }
+	    key: 'captured',
+	    get: function () {
+	      function get() {
+	        return this.newSpace.piece;
+	      }
+
+	      return get;
+	    }()
 	  }, {
-	    key: 'queens',
-	    value: function queens() {
-	      return [new Queen('black'), new Queen('white')];
-	    }
+	    key: 'captures',
+	    get: function () {
+	      function get() {
+	        return this.chess.board.captures;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'board',
+	    get: function () {
+	      function get() {
+	        return this.chess.board;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'currentPiece',
+	    get: function () {
+	      function get() {
+	        return this.currentSpace.piece;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'spaceAvailable',
+	    get: function () {
+	      function get() {
+	        return this.isDifferentColor && this.availableSpaces.includes(this.newSpace);
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'isDifferentColor',
+	    get: function () {
+	      function get() {
+	        return this.currentPiece.color !== this.captured.color;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'availableSpaces',
+	    get: function () {
+	      function get() {
+	        var _this = this;
+
+	        return this.board.spaces.filter(function (space) {
+	          return _this.currentPiece.validMove(_this.currentSpace, space);
+	        });
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Move;
+	}();
+
+	var Board = function () {
+	  function Board() {
+	    var spaces = arguments.length <= 0 || arguments[0] === undefined ? StartingSpaces() : arguments[0];
+
+	    _classCallCheck(this, Board);
+
+	    this.spaces = spaces;
+	    this.captures = [];
+	    this.selectedSpace = null;
+	  }
+
+	  _createClass(Board, [{
+	    key: 'selectSpace',
+	    set: function () {
+	      function set(space) {
+	        this.selectedSpace = space;
+	      }
+
+	      return set;
+	    }()
+	  }, {
+	    key: 'pieces',
+	    get: function () {
+	      function get() {
+	        return this.spaces.map(function (space) {
+	          return space.piece;
+	        }).concat(this.captures).filter(function (piece) {
+	          return piece.constructor !== 'NullPiece';
+	        });
+	      }
+
+	      return get;
+	    }()
 	  }]);
 
 	  return Board;
 	}();
 
-	var Space = function Space(index, piece) {
-	  _classCallCheck(this, Space);
+	var Space = function () {
+	  function Space(index) {
+	    var piece = arguments.length <= 1 || arguments[1] === undefined ? new NullPiece() : arguments[1];
 
-	  this.index = index;
-	  if (piece != null) {
+	    _classCallCheck(this, Space);
+
+	    this.index = index;
 	    this.piece = piece;
-	  } else {
-	    this.piece = new NullPiece();
 	  }
-	};
 
-	var NullPiece = function NullPiece() {
-	  _classCallCheck(this, NullPiece);
+	  _createClass(Space, [{
+	    key: 'color',
+	    get: function () {
+	      function get() {
+	        return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light';
+	      }
 
-	  this.color = null;
-	};
+	      return get;
+	    }()
+	  }, {
+	    key: 'row',
+	    get: function () {
+	      function get() {
+	        return parseInt(this.index / 8);
+	      }
 
-	var Piece = function Piece(color) {
-	  _classCallCheck(this, Piece);
+	      return get;
+	    }()
+	  }, {
+	    key: 'column',
+	    get: function () {
+	      function get() {
+	        return this.index % 8;
+	      }
 
-	  this.color = color;
-	};
+	      return get;
+	    }()
+	  }]);
 
-	var Pawn = function (_Piece) {
-	  _inherits(Pawn, _Piece);
+	  return Space;
+	}();
+
+	var NullPiece = function () {
+	  function NullPiece() {
+	    _classCallCheck(this, NullPiece);
+	  }
+
+	  _createClass(NullPiece, [{
+	    key: 'color',
+	    get: function () {
+	      function get() {
+	        return null;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '';
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'type',
+	    get: function () {
+	      function get() {
+	        return new Type();
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return NullPiece;
+	}();
+
+	var Color = function () {
+	  function Color() {
+	    _classCallCheck(this, Color);
+	  }
+
+	  _createClass(Color, [{
+	    key: 'factor',
+	    value: function () {
+	      function factor(num) {
+	        return num;
+	      }
+
+	      return factor;
+	    }()
+	  }]);
+
+	  return Color;
+	}();
+
+	var White = function (_Color) {
+	  _inherits(White, _Color);
+
+	  function White() {
+	    _classCallCheck(this, White);
+
+	    return _possibleConstructorReturn(this, (White.__proto__ || Object.getPrototypeOf(White)).apply(this, arguments));
+	  }
+
+	  _createClass(White, [{
+	    key: 'color',
+	    get: function () {
+	      function get() {
+	        return 'white';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return White;
+	}(Color);
+
+	var Black = function (_Color2) {
+	  _inherits(Black, _Color2);
+
+	  function Black() {
+	    _classCallCheck(this, Black);
+
+	    return _possibleConstructorReturn(this, (Black.__proto__ || Object.getPrototypeOf(Black)).apply(this, arguments));
+	  }
+
+	  _createClass(Black, [{
+	    key: 'factor',
+	    value: function () {
+	      function factor(num) {
+	        return num * -1;
+	      }
+
+	      return factor;
+	    }()
+	  }, {
+	    key: 'color',
+	    get: function () {
+	      function get() {
+	        return 'black';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Black;
+	}(Color);
+
+	var Piece = function () {
+	  function Piece(index, type, color) {
+	    _classCallCheck(this, Piece);
+
+	    this.colorClass = color;
+	    this.color = color.color;
+	    this.type = type;
+	    this.index = this.color === 'white' ? index + type.whiteOffset : index;
+	  }
+
+	  _createClass(Piece, [{
+	    key: 'validMove',
+	    value: function () {
+	      function validMove(currentSpace, newSpace) {
+	        return this.type.validMove(currentSpace, newSpace, this.colorClass);
+	      }
+
+	      return validMove;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return this.type.render;
+	      }
+
+	      return get;
+	    }()
+	  }], [{
+	    key: 'defaultPieces',
+	    value: function () {
+	      function defaultPieces(color, type) {
+	        return type.defaults.map(function (index) {
+	          return new Piece(index, type, color);
+	        });
+	      }
+
+	      return defaultPieces;
+	    }()
+	  }]);
+
+	  return Piece;
+	}();
+
+	var Type = function () {
+	  function Type() {
+	    _classCallCheck(this, Type);
+	  }
+
+	  _createClass(Type, [{
+	    key: 'validMove',
+	    value: function () {
+	      function validMove(currentSpace, newSpace) {
+	        return false;
+	      }
+
+	      return validMove;
+	    }()
+	  }, {
+	    key: 'whiteOffset',
+	    get: function () {
+	      function get() {
+	        return 56;
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Type;
+	}();
+
+	var Pawn = function (_Type) {
+	  _inherits(Pawn, _Type);
 
 	  function Pawn() {
 	    _classCallCheck(this, Pawn);
@@ -19875,11 +20297,51 @@
 	    return _possibleConstructorReturn(this, (Pawn.__proto__ || Object.getPrototypeOf(Pawn)).apply(this, arguments));
 	  }
 
-	  return Pawn;
-	}(Piece);
+	  _createClass(Pawn, [{
+	    key: 'validMove',
+	    value: function () {
+	      function validMove(currentSpace, newSpace, color) {
+	        var sameColumn = currentSpace.column === newSpace.column;
+	        var inPath = [1, 2].map(color.factor).includes(currentSpace.row - newSpace.row);
+	        return sameColumn && inPath;
+	      }
 
-	var Rook = function (_Piece2) {
-	  _inherits(Rook, _Piece2);
+	      return validMove;
+	    }()
+	  }, {
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [8, 9, 10, 11, 12, 13, 14, 15];
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♟';
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'whiteOffset',
+	    get: function () {
+	      function get() {
+	        return 24;
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Pawn;
+	}(Type);
+
+	var Rook = function (_Type2) {
+	  _inherits(Rook, _Type2);
 
 	  function Rook() {
 	    _classCallCheck(this, Rook);
@@ -19887,11 +20349,31 @@
 	    return _possibleConstructorReturn(this, (Rook.__proto__ || Object.getPrototypeOf(Rook)).apply(this, arguments));
 	  }
 
-	  return Rook;
-	}(Piece);
+	  _createClass(Rook, [{
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [0, 7];
+	      }
 
-	var Bishop = function (_Piece3) {
-	  _inherits(Bishop, _Piece3);
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♜';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Rook;
+	}(Type);
+
+	var Bishop = function (_Type3) {
+	  _inherits(Bishop, _Type3);
 
 	  function Bishop() {
 	    _classCallCheck(this, Bishop);
@@ -19899,11 +20381,31 @@
 	    return _possibleConstructorReturn(this, (Bishop.__proto__ || Object.getPrototypeOf(Bishop)).apply(this, arguments));
 	  }
 
-	  return Bishop;
-	}(Piece);
+	  _createClass(Bishop, [{
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [5, 2];
+	      }
 
-	var Knight = function (_Piece4) {
-	  _inherits(Knight, _Piece4);
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♝';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Bishop;
+	}(Type);
+
+	var Knight = function (_Type4) {
+	  _inherits(Knight, _Type4);
 
 	  function Knight() {
 	    _classCallCheck(this, Knight);
@@ -19911,11 +20413,31 @@
 	    return _possibleConstructorReturn(this, (Knight.__proto__ || Object.getPrototypeOf(Knight)).apply(this, arguments));
 	  }
 
-	  return Knight;
-	}(Piece);
+	  _createClass(Knight, [{
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [1, 6];
+	      }
 
-	var Queen = function (_Piece5) {
-	  _inherits(Queen, _Piece5);
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♞';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Knight;
+	}(Type);
+
+	var Queen = function (_Type5) {
+	  _inherits(Queen, _Type5);
 
 	  function Queen() {
 	    _classCallCheck(this, Queen);
@@ -19923,11 +20445,31 @@
 	    return _possibleConstructorReturn(this, (Queen.__proto__ || Object.getPrototypeOf(Queen)).apply(this, arguments));
 	  }
 
-	  return Queen;
-	}(Piece);
+	  _createClass(Queen, [{
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [3];
+	      }
 
-	var King = function (_Piece6) {
-	  _inherits(King, _Piece6);
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♛';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return Queen;
+	}(Type);
+
+	var King = function (_Type6) {
+	  _inherits(King, _Type6);
 
 	  function King() {
 	    _classCallCheck(this, King);
@@ -19935,10 +20477,856 @@
 	    return _possibleConstructorReturn(this, (King.__proto__ || Object.getPrototypeOf(King)).apply(this, arguments));
 	  }
 
-	  return King;
-	}(Piece);
+	  _createClass(King, [{
+	    key: 'defaults',
+	    get: function () {
+	      function get() {
+	        return [4];
+	      }
 
-	exports.default = Board;
+	      return get;
+	    }()
+	  }, {
+	    key: 'render',
+	    get: function () {
+	      function get() {
+	        return '♚';
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return King;
+	}(Type);
+
+	var allTypes = [new Bishop(), new Rook(), new Knight(), new Queen(), new King(), new Pawn()];
+
+	var reduceConcat = function () {
+	  function reduceConcat(cur, next) {
+	    return cur.concat(next);
+	  }
+
+	  return reduceConcat;
+	}();
+
+	var sortByIndex = function () {
+	  function sortByIndex(pre, cur) {
+	    return pre.index - cur.index;
+	  }
+
+	  return sortByIndex;
+	}();
+
+	var unsortedPiecesFor = function () {
+	  function unsortedPiecesFor(color) {
+	    return allTypes.map(function (type) {
+	      return Piece.defaultPieces(color, type);
+	    }).reduce(reduceConcat);
+	  }
+
+	  return unsortedPiecesFor;
+	}();
+
+	var PiecesFor = function () {
+	  function PiecesFor(color) {
+	    return unsortedPiecesFor(color).sort(sortByIndex);
+	  }
+
+	  return PiecesFor;
+	}();
+
+	var StartingSpaces = function () {
+	  function StartingSpaces() {
+	    return [PiecesFor(new Black()), EmptyRows(), PiecesFor(new White())].reduce(reduceConcat).map(function (piece, index) {
+	      return new Space(index, piece);
+	    });
+	  }
+
+	  return StartingSpaces;
+	}();
+
+	var EmptyRows = function () {
+	  function EmptyRows() {
+	    return Array.apply(null, Array(32));
+	  }
+
+	  return EmptyRows;
+	}();
+
+	exports.Chess = Chess;
+	exports.Move = Move;
+	exports.Board = Board;
+	exports.Piece = Piece;
+	exports.NullPiece = NullPiece;
+	exports.Space = Space;
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _space = __webpack_require__(163);
+
+	var _space2 = _interopRequireDefault(_space);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	__webpack_require__(165);
+
+	var ReactBoard = function (_Component) {
+	  _inherits(ReactBoard, _Component);
+
+	  function ReactBoard(props) {
+	    _classCallCheck(this, ReactBoard);
+
+	    var _this = _possibleConstructorReturn(this, (ReactBoard.__proto__ || Object.getPrototypeOf(ReactBoard)).call(this, props));
+
+	    _this.state = { selectedSpace: null, moves: [], chess: props.chess };
+	    return _this;
+	  }
+
+	  _createClass(ReactBoard, [{
+	    key: 'handleClick',
+	    value: function () {
+	      function handleClick(clickedSpace) {
+	        if (this.selectedSpace === clickedSpace.index) {
+	          this.setState({ selectedSpace: null, chess: this.chess, moves: this.moves });
+	        } else if (this.selectedSpace === null && clickedSpace.piece.constructor.name === 'NullPiece') {} else if (this.selectedSpace !== null && clickedSpace.index > -1) {
+	          var newMoves = this.moves.slice();
+	          newMoves.push(this.selectedSpace + ' ' + clickedSpace.index);
+	          this.setState({ selectedSpace: null, moves: newMoves, chess: this.chess.move(this.selectedSpace, clickedSpace.index) });
+	        } else {
+	          this.setState({ selectedSpace: clickedSpace.index, chess: this.chess, moves: this.moves });
+	        }
+	      }
+
+	      return handleClick;
+	    }()
+	  }, {
+	    key: 'render',
+	    value: function () {
+	      function render() {
+	        return _react2['default'].createElement(
+	          'div',
+	          { id: 'board' },
+	          _react2['default'].createElement(
+	            'div',
+	            null,
+	            this.spaceComponents
+	          )
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }, {
+	    key: 'chess',
+	    get: function () {
+	      function get() {
+	        return this.state.chess;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'moves',
+	    get: function () {
+	      function get() {
+	        return this.state.moves;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'spaces',
+	    get: function () {
+	      function get() {
+	        return this.chess.board.spaces;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'selectedSpace',
+	    get: function () {
+	      function get() {
+	        return this.state.selectedSpace;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'spaceComponents',
+	    get: function () {
+	      function get() {
+	        var _this2 = this;
+
+	        return this.spaces.map(function (space) {
+	          return _react2['default'].createElement(_space2['default'], {
+	            space: space,
+	            key: space.index,
+	            selected: _this2.selectedSpace === space.index,
+	            handleClick: _this2.handleClick.bind(_this2) });
+	        });
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return ReactBoard;
+	}(_react.Component);
+
+	exports['default'] = ReactBoard;
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _piece = __webpack_require__(164);
+
+	var _piece2 = _interopRequireDefault(_piece);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReactSpace = function (_Component) {
+	  _inherits(ReactSpace, _Component);
+
+	  function ReactSpace() {
+	    _classCallCheck(this, ReactSpace);
+
+	    return _possibleConstructorReturn(this, (ReactSpace.__proto__ || Object.getPrototypeOf(ReactSpace)).apply(this, arguments));
+	  }
+
+	  _createClass(ReactSpace, [{
+	    key: 'render',
+	    value: function () {
+	      function render() {
+	        var _this2 = this;
+
+	        return _react2['default'].createElement(
+	          'div',
+	          {
+	            className: this.className,
+	            id: this.index,
+	            onClick: function () {
+	              function onClick() {
+	                _this2.props.handleClick(_this2);
+	              }
+
+	              return onClick;
+	            }() },
+	          _react2['default'].createElement(
+	            'div',
+	            null,
+	            this.pieceComponent
+	          )
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }, {
+	    key: 'space',
+	    get: function () {
+	      function get() {
+	        return this.props.space;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'selected',
+	    get: function () {
+	      function get() {
+	        return this.props.selected;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'color',
+	    get: function () {
+	      function get() {
+	        return this.space.color;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'index',
+	    get: function () {
+	      function get() {
+	        return this.space.index;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'piece',
+	    get: function () {
+	      function get() {
+	        return this.space.piece;
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'pieceComponent',
+	    get: function () {
+	      function get() {
+	        return _react2['default'].createElement(_piece2['default'], { piece: this.piece });
+	      }
+
+	      return get;
+	    }()
+	  }, {
+	    key: 'className',
+	    get: function () {
+	      function get() {
+	        var classes = ['space', this.color];
+	        if (this.selected) {
+	          classes.push('selected');
+	        }
+	        return classes.join(' ');
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return ReactSpace;
+	}(_react.Component);
+
+	exports['default'] = ReactSpace;
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReactPiece = function (_Component) {
+	  _inherits(ReactPiece, _Component);
+
+	  function ReactPiece() {
+	    _classCallCheck(this, ReactPiece);
+
+	    return _possibleConstructorReturn(this, (ReactPiece.__proto__ || Object.getPrototypeOf(ReactPiece)).apply(this, arguments));
+	  }
+
+	  _createClass(ReactPiece, [{
+	    key: 'render',
+	    value: function () {
+	      function render() {
+	        return _react2['default'].createElement(
+	          'div',
+	          { className: this.className },
+	          _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: this.props.piece.render } })
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }, {
+	    key: 'className',
+	    get: function () {
+	      function get() {
+	        var colorClass = this.props.piece.color === 'white' ? 'white' : 'black';
+	        return 'piece ' + colorClass;
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return ReactPiece;
+	}(_react.Component);
+
+	exports['default'] = ReactPiece;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(166);
+	if (typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(168)(content, {});
+	if (content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if (false) {
+		// When the styles change, update the <style> tags
+		if (!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./chess.css", function () {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./chess.css");
+				if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function () {
+			update();
+		});
+	}
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(167)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#board {\n\theight: 450px;\n\twidth: 450px;\n\tfloat: left;\n}\n\n#moves {\n\tborder: 1px solid black;\n\theight: 450px;\n\twidth: 100px;\n\tfloat: left;\n}\n\n.space {\n\theight: 50px;\n\twidth: 50px;\n\tborder: 1px solid black;\n\tfloat: left;\n\tposition: relative;\n}\n\n.piece {\n\tfont-size: 35px;\n\theight: 50px;\n\twidth: 50px;\n\ttext-align: center;\n\tposition: absolute;\n}\n\n.index {\n\tfont-size: 10px;\n\tposition: absolute;\n}\n\n.white {\n\tcolor: white;\n\ttext-shadow:\n    -1px -1px 0 #000,\n    1px -1px 0 #000,\n    -1px 1px 0 #000,\n    1px 1px 0 #000;\n}\n\n.black {\n\tcolor: black;\n}\n\n.dark {\n\tbackground-color : #996d54;\n}\n\n.light {\n\tbackground-color : #F1D4B2;\n}\n\n.selected {\n\tbackground-color : red;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 167 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReactMoves = function (_Component) {
+	  _inherits(ReactMoves, _Component);
+
+	  function ReactMoves(props) {
+	    _classCallCheck(this, ReactMoves);
+
+	    var _this = _possibleConstructorReturn(this, (ReactMoves.__proto__ || Object.getPrototypeOf(ReactMoves)).call(this, props));
+
+	    _this.state = {};
+	    return _this;
+	  }
+
+	  _createClass(ReactMoves, [{
+	    key: "render",
+	    value: function () {
+	      function render() {
+	        return _react2["default"].createElement(
+	          "div",
+	          { id: "moves" },
+	          this.moveComponents
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }, {
+	    key: "moveComponents",
+	    get: function () {
+	      function get() {
+	        return this.props.moves.map(function (move) {
+	          return _react2["default"].createElement(
+	            "div",
+	            { id: move, className: "move" },
+	            move
+	          );
+	        });
+	      }
+
+	      return get;
+	    }()
+	  }]);
+
+	  return ReactMoves;
+	}(_react.Component);
+
+	exports["default"] = ReactMoves;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);

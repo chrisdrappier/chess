@@ -38,7 +38,7 @@ class ReactBoard extends Component {
   }
 
   render () {
-    return <div id="board">{this.spaceComponents}</div>
+    return <div id="board"><div>{this.spaceComponents}</div></div>
   }
 }
 

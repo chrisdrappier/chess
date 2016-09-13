@@ -143,17 +143,8 @@ class Pawn extends Type {
   get render () { return '♟' }
   get whiteOffset () { return 24 }
   validMove (currentSpace, newSpace, color) {
-    const defaultWithOffset = this.defaults.map((dflt) => { return dflt + this.whiteOffset })
-    const onDefaultSpace = defaultWithOffset.includes(newSpace.index)
-    const path = onDefaultSpace ? [1, 2] : [1]
-    console.log(defaultWithOffset)
-    console.log(newSpace.index)
-    console.log(defaultWithOffset.includes(newSpace.index))
-    console.log(path)
-    console.log(color)
-    console.log(currentSpace.row - newSpace.row)
     const sameColumn = currentSpace.column === newSpace.column
-    const inPath = path.map(color.factor).includes(currentSpace.row - newSpace.row)
+    const inPath = [1, 2].map(color.factor).includes(currentSpace.row - newSpace.row)
     return sameColumn && inPath
   }
 }

@@ -9,7 +9,7 @@ class ReactPiece extends Component {
 
   render () {
     return (
-      <div className={this.className}>{this.props.piece.render}</div>
+      <div className={this.className}><div dangerouslySetInnerHTML={{__html: this.props.piece.render}} /></div>
     )
   }
 }
