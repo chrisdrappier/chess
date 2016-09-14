@@ -8,6 +8,8 @@ class SpaceComponent extends Component {
   get color () { return this.space.color }
   get index () { return this.space.index }
   get piece () { return this.space.piece }
+  get row () { return this.space.row }
+  get column () { return this.space.column }
 
   get pieceComponent () {
     return <Piece piece={this.piece} />
@@ -29,6 +31,7 @@ class SpaceComponent extends Component {
         className={this.className}
         id={this.index}
         onClick={() => { this.props.handleClick(this) }}>
+        <div style={{fontSize: '11px'}}> {this.index} - {this.row} - {this.column}</div>
         <div>{this.pieceComponent}</div>
       </div>
     )

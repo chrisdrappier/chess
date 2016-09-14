@@ -55,9 +55,13 @@ class Move {
   }
 
   get availableSpaces () {
-    return this.board.spaces.filter((space) => {
-      return this.currentPiece.validMove(this.currentSpace, space)
-    })
+    if (this.turn) {
+      return this.board.spaces.filter((space) => {
+        return this.currentPiece.validMove(this.currentSpace, space)
+      })
+    } else {
+      return []
+    }
   }
 }
 

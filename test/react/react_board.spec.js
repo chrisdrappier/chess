@@ -38,8 +38,9 @@ describe('<ReactBoard />', () => {
 
     it('highlights legal moves on selection', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
-      clickSpace(board, 35)
-      expect(board.find('#51').node.classList.contains('available')).to.equal(true)
+      clickSpace(board, 51)
+      // TODO make this expectation more in line with it's title. right now it checks one position
+      expect(board.find('#35').hasClass('available')).to.equal(true) // node.classList.contains
     })
 
     describe('when unselecting the piece', () => {

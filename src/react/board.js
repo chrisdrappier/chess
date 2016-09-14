@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import Space from './space'
+import { Move } from '../chess'
 require('../../stylesheets/chess.css')
 
 class BoardComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { selectedSpace: null, chess: props.chess }
+    this.state = { selectedSpace: null, chess: props.chess, availableSpaces: [] }
   }
 
   handleClick (clickedSpace) {
     if (this.selectedSpace === clickedSpace.index) {
-      this.setState({selectedSpace: null, chess: this.chess})
+      this.setState({selectedSpace: null, availableSpaces: [], chess: this.chess})
     } else if (this.selectedSpace === null && clickedSpace.piece.constructor.name === 'NullPiece') {
     } else if (this.selectedSpace !== null && clickedSpace.index > -1) {
-      this.setState({selectedSpace: null, chess: this.chess.move(this.selectedSpace, clickedSpace.index)})
+      this.setState({selectedSpace: null, availableSpaces: [], chess: this.chess.move(this.selectedSpace, clickedSpace.index)})
     } else {
-      this.setState({selectedSpace: clickedSpace.index, chess: this.chess})
+      const currentSpace = this.spaces[clickedSpace.index]
+      const newSpace = this.spaces[Math.abs(clickedSpace.index - 64)]
+      const availableSpaces = new Move(this.chess, currentSpace, newSpace).availableSpaces
+      this.setState({selectedSpace: clickedSpace.index, chess: this.chess, availableSpaces: availableSpaces})
     }
   }
 
   get chess () { return this.state.chess }
-  get moves () { return this.state.moves }
-  get spaces () { return this.chess.board.spaces }
+  get board () { return this.chess.board }
+  get spaces () { return this.board.spaces }
   get selectedSpace () { return this.state.selectedSpace }
+  get selectedPiece () { return this.selectedSpace.piece }
+  get availableSpaces () { return this.state.availableSpaces }
 
   get spaceComponents () {
     return this.spaces.map((space) => {
@@ -31,12 +37,13 @@ class BoardComponent extends Component {
         space={space}
         key={space.index}
         selected={this.selectedSpace === space.index}
-        available={Boolean(true)}
+        available={this.availableSpaces.includes(space)}
         handleClick={this.handleClick.bind(this)} />
     })
   }
 
   render () {
+    console.log(this.availableSpaces)
     return <div id="board"><div>{this.spaceComponents}</div></div>
   }
 }
