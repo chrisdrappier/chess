@@ -74,7 +74,7 @@ class Board {
     return this.spaces.map((space) => {
       return space.piece
     }).concat(this.captures).filter((piece) => {
-      return piece.constructor !== 'NullPiece'
+      return piece
     })
   }
 }
@@ -94,6 +94,7 @@ class NullPiece {
   get color () { return null }
   get render () { return '' }
   get type () { return new Type() }
+  get valueOf () { return false }
 }
 
 class Color {
