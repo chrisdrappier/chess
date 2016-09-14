@@ -13,6 +13,10 @@ const GetHTML = (fileName) => {
   return readFileSync(`./test/react/fixtures/${fileName}.html`, 'utf-8').slice(0, -1)
 }
 
+const clickSpace = (board, spaceIndex) => {
+  board.find(`#${spaceIndex}`).simulate('click')
+}
+
 const simulateMove = (board, current, target) => {
   board.find(`#${current}`).simulate('click')
   board.find(`#${target}`).simulate('click')
@@ -32,17 +36,16 @@ describe('<ReactBoard />', () => {
       expect(board.find(ReactSpace)).to.have.length(64)
     })
 
-    it('only allows one move per turn')
-    it('can only capture opposite colors')
-    it('highlights legal moves on selection')
-    it('only allows legal moves')
+    it('highlights legal moves on selection', () => {
+      const board = mount(<ReactBoard chess={new Chess()} />)
+      clickSpace(board, 35)
+      expect(board.find('#51').className).to.include('available')
+    })
 
     describe('when unselecting the piece', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 51)
-      it('does not populate moves array') // , () => {
-        // expect(board.state().moves).to.have.length(0)
-      // })
+      it('does not populate moves array')
     })
 
     describe('when selecting an empty space', () => {
@@ -56,9 +59,6 @@ describe('<ReactBoard />', () => {
     describe('when moving the piece', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       simulateMove(board, 51, 35)
-      it('populates moves array') // , () => {
-        // expect(board.state().moves).to.have.length(1)
-      // })
 
       it('sets the value of the new space', () => {
         expect(board.find('#35').html()).to.contain('♟')
