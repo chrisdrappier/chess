@@ -43,7 +43,6 @@ class BoardComponent extends Component {
   }
 
   render () {
-    console.log(this.availableSpaces)
     return <div id="board"><div>{this.spaceComponents}</div></div>
   }
 }

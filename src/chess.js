@@ -1,6 +1,6 @@
 class Chess {
-  constructor () {
-    this.board = new Board()
+  constructor (board = new Board()) {
+    this.board = board
     this.turn = 'white'
   }
 
@@ -23,8 +23,26 @@ class Move {
     this.chess = chess
   }
 
+  get board () { return this.chess.board }
+  get turn () { return (this.currentPiece.color === this.chess.turn) }
+  get captured () { return this.newSpace.piece }
+  get captures () { return this.chess.board.captures }
+  get currentPiece () { return this.currentSpace.piece }
+  get spaceAvailable () { return (this.availableSpaces.includes(this.newSpace)) }
+  get differentColor () { return this.currentPiece.color !== this.captured.color }
+
+  get availableSpaces () {
+    if (this.turn && this.differentColor) {
+      return this.board.spaces.filter((space) => {
+        return this.currentPiece.validMove(this.currentSpace, space)
+      })
+    } else {
+      return []
+    }
+  }
+
   execute () {
-    if (this.turn && this.spaceAvailable) {
+    if (this.spaceAvailable) {
       this.capture()
       this.setPieces()
       this.chess.passTurn()
@@ -38,30 +56,6 @@ class Move {
 
   capture () {
     this.captures.push(this.captured)
-  }
-
-  get turn () {
-    return (this.currentPiece.color === this.chess.turn)
-  }
-
-  get captured () { return this.newSpace.piece }
-  get captures () { return this.chess.board.captures }
-  get board () { return this.chess.board }
-  get currentPiece () { return this.currentSpace.piece }
-  get spaceAvailable () { return (this.isDifferentColor && this.availableSpaces.includes(this.newSpace)) }
-
-  get isDifferentColor () {
-    return this.currentPiece.color !== this.captured.color
-  }
-
-  get availableSpaces () {
-    if (this.turn) {
-      return this.board.spaces.filter((space) => {
-        return this.currentPiece.validMove(this.currentSpace, space)
-      })
-    } else {
-      return []
-    }
   }
 }
 
@@ -191,6 +185,10 @@ const unsortedPiecesFor = (color) => {
   return allTypes.map((type) => {
     return Piece.defaultPieces(color, type)
   }).reduce(reduceConcat)
+}
+
+const allPieces = () => {
+  return ['black', 'white'].map(unsortedPiecesFor).reduce(reduceConcat)
 }
 
 const PiecesFor = (color) => {
