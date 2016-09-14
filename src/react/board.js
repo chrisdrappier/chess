@@ -31,6 +31,7 @@ class BoardComponent extends Component {
         space={space}
         key={space.index}
         selected={this.selectedSpace === space.index}
+        available={Boolean(true)}
         handleClick={this.handleClick.bind(this)} />
     })
   }

@@ -39,7 +39,7 @@ describe('<ReactBoard />', () => {
     it('highlights legal moves on selection', () => {
       const board = mount(<ReactBoard chess={new Chess()} />)
       clickSpace(board, 35)
-      expect(board.find('#51').className).to.include('available')
+      expect(board.find('#51').node.classList.contains('available')).to.equal(true)
     })
 
     describe('when unselecting the piece', () => {

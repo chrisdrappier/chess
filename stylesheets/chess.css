@@ -56,3 +56,7 @@
 .selected {
 	background-color : red;
 }
+
+.available {
+	background-color: #9ddbea;
+}

@@ -3,6 +3,7 @@ import Piece from './piece.js'
 class SpaceComponent extends Component {
   get space () { return this.props.space }
   get selected () { return this.props.selected }
+  get available () { return this.props.available }
 
   get color () { return this.space.color }
   get index () { return this.space.index }
@@ -16,6 +17,8 @@ class SpaceComponent extends Component {
     var classes = ['space', this.color]
     if (this.selected) {
       classes.push('selected')
+    } else if (this.available) {
+      classes.push('available')
     }
     return classes.join(' ')
   }
