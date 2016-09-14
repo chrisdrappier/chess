@@ -131,7 +131,10 @@ describe('Chess', () => {
       var spaces = board.pieces.filter((piece) => {
         return piece.constructor.name !== 'NullPiece'
       })
-      assert.strictEqual(spaces.length, 32)
+      it('is 32', () => {
+        expect(spaces.length).to.equal(32)
+      })
+
     })
   })
   describe('move', () => {
