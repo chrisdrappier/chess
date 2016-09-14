@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ReactPiece from './piece.js'
-class ReactSpace extends Component {
+import Piece from './piece.js'
+class SpaceComponent extends Component {
   get space () { return this.props.space }
   get selected () { return this.props.selected }
 
@@ -9,7 +9,7 @@ class ReactSpace extends Component {
   get piece () { return this.space.piece }
 
   get pieceComponent () {
-    return <ReactPiece piece={this.piece} />
+    return <Piece piece={this.piece} />
   }
 
   get className () {
@@ -32,4 +32,4 @@ class ReactSpace extends Component {
   }
 }
 
-export default ReactSpace
+export default SpaceComponent

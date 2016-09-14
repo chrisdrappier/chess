@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Chess from '../chess'
-import ReactBoard from './board'
+import Board from './board'
 
-class App extends Component {
+class AppComponent extends Component {
   constructor (props) {
     super(props)
     this.state = { chess: new Chess() }
@@ -13,10 +13,10 @@ class App extends Component {
   render () {
     return (
       <div>
-        <ReactBoard chess={this.chess} />
+        <Board chess={this.chess} />
       </div>
     )
   }
 }
 
-export default App
+export default AppComponent

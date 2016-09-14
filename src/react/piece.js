@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class ReactPiece extends Component {
+class PieceComponent extends Component {
 
   get className () {
     var colorClass = this.props.piece.color === 'white' ? 'white' : 'black'
@@ -14,4 +14,4 @@ class ReactPiece extends Component {
   }
 }
 
-export default ReactPiece
+export default PieceComponent

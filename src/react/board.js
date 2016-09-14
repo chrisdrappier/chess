@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import ReactSpace from './space'
+import Space from './space'
 require('../../stylesheets/chess.css')
 
-class ReactBoard extends Component {
+class BoardComponent extends Component {
 
   constructor (props) {
     super(props)
@@ -27,7 +27,7 @@ class ReactBoard extends Component {
 
   get spaceComponents () {
     return this.spaces.map((space) => {
-      return <ReactSpace
+      return <Space
         space={space}
         key={space.index}
         selected={this.selectedSpace === space.index}
@@ -40,4 +40,4 @@ class ReactBoard extends Component {
   }
 }
 
-export default ReactBoard
+export default BoardComponent
