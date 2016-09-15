@@ -10,7 +10,6 @@ const rootReducer = combineReducers({
 })
 
 const store = createStore(rootReducer)
-console.log(Provider)
 ReactDOM.render(
   <Provider store={store}>
     <App />
