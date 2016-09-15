@@ -31,7 +31,7 @@ class SpaceComponent extends Component {
         className={this.className}
         id={this.index}
         onClick={() => { this.props.handleClick(this) }}>
-        <div style={{fontSize: '11px'}}> {this.index} - {this.row} - {this.column}</div>
+        <div className="index"> {this.index} - {this.row} - {this.column}</div>
         <div>{this.pieceComponent}</div>
       </div>
     )
