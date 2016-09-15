@@ -134,7 +134,6 @@ describe('Chess', () => {
       it('is 32', () => {
         expect(spaces.length).to.equal(32)
       })
-
     })
   })
   describe('move', () => {

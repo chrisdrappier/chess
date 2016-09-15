@@ -4,7 +4,7 @@ module.exports = {
   ],
   output: {
     path: __dirname,
-    publicPath: './gh-pages',
+    publicPath: '/',
     filename: 'bundle.js',
     target: 'web'
   },
