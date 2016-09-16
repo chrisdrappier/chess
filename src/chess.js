@@ -1,11 +1,25 @@
 class Chess {
   constructor (board = new Board()) {
     this.board = board
-    this.turn = 'white'
+  }
+
+  render () {
+    return new Chess(this.board)
   }
 
   passTurn () {
-    this.turn = this.turn === 'white' ? 'black' : 'white'
+    this.board.turn = this.board.turn === 'white' ? 'black' : 'white'
+  }
+
+  click (space) {
+    const selectedSpace = this.board.selectedSpace
+    if (selectedSpace) {
+      this.move(selectedSpace.index, space.index)
+      this.board.selectedSpace = null
+    } else {
+      this.board.selectedSpace = space
+    }
+    return new Chess(this.board)
   }
 
   move (currentIndex, newIndex) {
@@ -14,6 +28,8 @@ class Chess {
     new Move(this, currentSpace, newSpace).execute()
     return this
   }
+
+  get turn () { return this.board.turn }
 }
 
 class Move {
@@ -30,12 +46,11 @@ class Move {
   get currentPiece () { return this.currentSpace.piece }
   get spaceAvailable () { return (this.availableSpaces.includes(this.newSpace)) }
   get differentColor () { return this.currentPiece.color !== this.captured.color }
+  get selectedSpace () { return this.board.selectedSpace }
 
   get availableSpaces () {
     if (this.turn && this.differentColor) {
-      return this.board.spaces.filter((space) => {
-        return this.currentPiece.validMove(this.currentSpace, space)
-      })
+      return this.board.availableSpaces
     } else {
       return []
     }
@@ -64,10 +79,7 @@ class Board {
     this.spaces = spaces
     this.captures = []
     this.selectedSpace = null
-  }
-
-  set selectSpace (space) {
-    this.selectedSpace = space
+    this.turn = 'white'
   }
 
   get pieces () {
@@ -75,6 +87,16 @@ class Board {
       return space.piece
     }).concat(this.captures).filter((piece) => {
       return piece
+    })
+  }
+
+  get selectedPiece () {
+    return this.selectedSpace ? this.selectedSpace.piece : new NullPiece()
+  }
+
+  get availableSpaces () {
+    return this.spaces.filter((space) => {
+      return this.selectedPiece.validMove(this.selectedSpace, space)
     })
   }
 }
@@ -95,6 +117,9 @@ class NullPiece {
   get render () { return '' }
   get type () { return new Type() }
   get valueOf () { return false }
+  validMove (n, n2) {
+    return false
+  }
 }
 
 class Color {

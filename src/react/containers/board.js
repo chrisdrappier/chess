@@ -1,10 +1,19 @@
 import { connect } from 'react-redux'
 import Board from '../board.js'
+import { boardClick } from '../actions'
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
   return {
     chess: state.chess
   }
 }
 
-export default connect(mapStateToProps)(Board)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onBoardClick: (space) => {
+      dispatch(boardClick(space))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board)

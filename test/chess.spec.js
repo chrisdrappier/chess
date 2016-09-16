@@ -18,12 +18,11 @@ const AssertPieceCount = (chess, count, type, color = null) => {
 }
 
 const AssertValidMove = (chess, current, target) => {
-  var board = chess.board
-  var currentSpace = board.spaces[current]
-  var newSpace = board.spaces[target]
-  var capture = newSpace.piece
-  var currentPiece = currentSpace.piece
-  chess.move(current, target)
+  const currentPiece = chess.board.spaces[current].piece
+  const capture = chess.board.spaces[target].piece
+  chess = simulateMove(chess, current, target)
+  const currentSpace = chess.board.spaces[current]
+  const newSpace = chess.board.spaces[target]
   describe(`move from ${current} to ${target}`, () => {
     it(`vacates ${current}`, () => {
       expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
@@ -57,6 +56,15 @@ const AssertInvalidMove = (chess, current, target) => {
   })
 }
 
+const simulateMove = (chess, current, target) => {
+  chess = simulateClick(chess, current)
+  return simulateClick(chess, target)
+}
+
+const simulateClick = (chess, spaceIndex) => {
+  const space = chess.board.spaces[spaceIndex]
+  return chess.click(space)
+}
 describe('Space', () => {
   var space = new Space(0)
 
@@ -83,7 +91,7 @@ describe('Chess', () => {
   describe('turns', () => {
     var chess = new Chess()
     it('passes turn after successful move', () => {
-      chess.move(51, 35)
+      chess = simulateMove(chess, 51, 35)
       expect(chess.turn).to.equal('black')
     })
 
