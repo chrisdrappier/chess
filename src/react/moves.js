@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 
 class ReactMoves extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
+  get moves () { return this.props.moves }
   get moveComponents () {
-    return this.props.moves.map((move) => {
+    return this.moves.map((move) => {
       return <div id={move} className="move">{move}</div>
     })
   }

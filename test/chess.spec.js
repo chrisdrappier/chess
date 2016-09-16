@@ -39,11 +39,11 @@ const AssertValidMove = (chess, current, target) => {
 }
 
 const AssertInvalidMove = (chess, current, target) => {
-  var board = chess.board
-  var currentSpace = board.spaces[current]
-  var newSpace = board.spaces[target]
-  var capture = newSpace.piece
-  var currentPiece = currentSpace.piece
+  const currentPiece = chess.board.spaces[current].piece
+  const capture = chess.board.spaces[target].piece
+  chess = simulateMove(chess, current, target)
+  const currentSpace = chess.board.spaces[current]
+  const newSpace = chess.board.spaces[target]
   chess.move(current, target)
   describe(`do not move from ${current} to ${target}`, () => {
     it('does not move', () => {

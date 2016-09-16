@@ -4,7 +4,7 @@ class TurnComponent extends Component {
 
   render () {
     return (
-      <div className="turn">TUUURRRRRNNNNNNS{this.props.turn}</div>
+      <div id="turn">Turn: {this.props.turn}</div>
     )
   }
 }

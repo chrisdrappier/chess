@@ -32,6 +32,33 @@ class Chess {
   get turn () { return this.board.turn }
 }
 
+class Board {
+  constructor (spaces = StartingSpaces()) {
+    this.spaces = spaces
+    this.captures = []
+    this.selectedSpace = null
+    this.turn = 'white'
+  }
+
+  get pieces () {
+    return this.spaces.map((space) => {
+      return space.piece
+    }).concat(this.captures).filter((piece) => {
+      return piece
+    })
+  }
+
+  get selectedPiece () {
+    return this.selectedSpace ? this.selectedSpace.piece : new NullPiece()
+  }
+
+  get availableSpaces () {
+    return this.spaces.filter((space) => {
+      return this.selectedPiece.validMove(this.selectedSpace, space)
+    })
+  }
+}
+
 class Move {
   constructor (chess, currentSpace, newSpace) {
     this.currentSpace = currentSpace
@@ -71,33 +98,6 @@ class Move {
 
   capture () {
     this.captures.push(this.captured)
-  }
-}
-
-class Board {
-  constructor (spaces = StartingSpaces()) {
-    this.spaces = spaces
-    this.captures = []
-    this.selectedSpace = null
-    this.turn = 'white'
-  }
-
-  get pieces () {
-    return this.spaces.map((space) => {
-      return space.piece
-    }).concat(this.captures).filter((piece) => {
-      return piece
-    })
-  }
-
-  get selectedPiece () {
-    return this.selectedSpace ? this.selectedSpace.piece : new NullPiece()
-  }
-
-  get availableSpaces () {
-    return this.spaces.filter((space) => {
-      return this.selectedPiece.validMove(this.selectedSpace, space)
-    })
   }
 }
 
