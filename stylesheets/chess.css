@@ -4,10 +4,10 @@
 	float: left;
 }
 
-#moves {
+#captures {
 	border: 1px solid black;
 	height: 450px;
-	width: 100px;
+	width: 200px;
 	float: left;
 }
 
@@ -24,7 +24,6 @@
 	height: 50px;
 	width: 50px;
 	text-align: center;
-	position: absolute;
 }
 
 .index {

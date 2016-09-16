@@ -3,10 +3,6 @@ class Chess {
     this.board = board
   }
 
-  render () {
-    return new Chess(this.board)
-  }
-
   passTurn () {
     this.board.turn = this.board.turn === 'white' ? 'black' : 'white'
   }
@@ -15,6 +11,8 @@ class Chess {
     const selectedSpace = this.board.selectedSpace
     if (selectedSpace) {
       this.move(selectedSpace.index, space.index)
+      console.log(this.board.captures)
+      console.log('+++++++++++++++++++++++++++++++++++++++')
       this.board.selectedSpace = null
     } else {
       this.board.selectedSpace = space
@@ -30,6 +28,7 @@ class Chess {
   }
 
   get turn () { return this.board.turn }
+  get captures () { return this.board.captures }
 }
 
 class Board {
@@ -84,7 +83,16 @@ class Move {
   }
 
   execute () {
+    console.log(this.turn)
+    console.log(this.currentSpace)
+    console.log(this.newSpace)
+    console.log(this.currentPiece)
+    console.log(this.captured)
+    console.log(this.differentColor)
+    console.log(this.availableSpaces)
+    console.log(this.spaceAvailable)
     if (this.spaceAvailable) {
+      console.log('should be capturing...')
       this.capture()
       this.setPieces()
       this.chess.passTurn()
@@ -97,7 +105,10 @@ class Move {
   }
 
   capture () {
+    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+    console.log(this.captures)
     this.captures.push(this.captured)
+    console.log(this.captures)
   }
 }
 

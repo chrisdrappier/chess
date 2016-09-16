@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 
 class PieceComponent extends Component {
-
   get className () {
-    var colorClass = this.props.piece.color === 'white' ? 'white' : 'black'
-    return `piece ${colorClass}`
+    var classes = ['piece', this.color]
+    if (this.props.piece.color === 'white') {
+      classes.push('white')
+    } else {
+      classes.push('black')
+    }
+
+    if (this.props.piece.captured) {
+      classes.push('captured')
+    }
+    return classes.join(' ')
   }
 
   render () {
