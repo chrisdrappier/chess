@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai'
 import { describe, it } from 'mocha'
-import { Chess, Space } from '../src/chess'
+import Chess from '../src/chess'
 
 const FilterByType = (chess, type, color = null) => {
   return chess.board.pieces.filter((piece) => {
@@ -65,25 +65,6 @@ const simulateClick = (chess, spaceIndex) => {
   const space = chess.board.spaces[spaceIndex]
   return chess.click(space)
 }
-describe('Space', () => {
-  var space = new Space(0)
-
-  it('has an index', () => {
-    assert(space.index === 0)
-  })
-
-  it('has a color', () => {
-    assert(space.color === 'light')
-  })
-
-  it('has a row', () => {
-    assert(space.row === 0)
-  })
-
-  it('has a column', () => {
-    assert(space.column === 0)
-  })
-})
 
 describe('Chess', () => {
   var chess = new Chess()
