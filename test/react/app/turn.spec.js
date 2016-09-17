@@ -15,7 +15,6 @@ describe('#turn', () => {
     it('gets populated when a move happens') // , () => {
     //   const app = mount(<App />)
     //   simulateMove(app, 51, 35)
-    //   console.log(app.find('#turn').toString())
     //   expect(app.find('#turn')).to.contain('black')
     // })
   })

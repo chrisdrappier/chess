@@ -7,7 +7,6 @@ class CapturesComponent extends Component {
     return this.captures.filter((piece) => {
       return piece.constructor.name !== 'NullPiece'
     }).map((capture, index) => {
-      console.log(capture)
       capture.captured = true
       return <Piece piece={capture} key={index} />
     })

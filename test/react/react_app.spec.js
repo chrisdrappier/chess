@@ -19,10 +19,10 @@ describe('<App />', () => {
       expect(spaces).to.have.length(64)
     })
 
-    it('has 64 pieces (half are null)', () => {
+    it('has 32 pieces', () => {
       const app = mount(<App />)
       const pieces = app.find('.piece')
-      expect(pieces).to.have.length(64)
+      expect(pieces).to.have.length(32)
     })
   })
 

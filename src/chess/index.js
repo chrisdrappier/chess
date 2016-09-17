@@ -11,8 +11,6 @@ class Chess {
     const selectedSpace = this.board.selectedSpace
     if (selectedSpace) {
       this.move(selectedSpace.index, space.index)
-      console.log(this.board.captures)
-      console.log('+++++++++++++++++++++++++++++++++++++++')
       this.board.selectedSpace = null
     } else {
       this.board.selectedSpace = space
@@ -42,9 +40,7 @@ class Board {
   get pieces () {
     return this.spaces.map((space) => {
       return space.piece
-    }).concat(this.captures).filter((piece) => {
-      return piece
-    })
+    }).concat(this.captures).filter(filterNullPiece)
   }
 
   get selectedPiece () {
@@ -83,16 +79,7 @@ class Move {
   }
 
   execute () {
-    console.log(this.turn)
-    console.log(this.currentSpace)
-    console.log(this.newSpace)
-    console.log(this.currentPiece)
-    console.log(this.captured)
-    console.log(this.differentColor)
-    console.log(this.availableSpaces)
-    console.log(this.spaceAvailable)
     if (this.spaceAvailable) {
-      console.log('should be capturing...')
       this.capture()
       this.setPieces()
       this.chess.passTurn()
@@ -105,10 +92,7 @@ class Move {
   }
 
   capture () {
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-    console.log(this.captures)
     this.captures.push(this.captured)
-    console.log(this.captures)
   }
 }
 
@@ -164,6 +148,10 @@ class Piece {
       return new Piece(index, type, color)
     })
   }
+
+  get isNull () {
+    return !filterNullPiece(this)
+  }
 }
 
 class Type {
@@ -203,6 +191,10 @@ class Queen extends Type {
 class King extends Type {
   get defaults () { return [4] }
   get render () { return '♚' }
+}
+
+const filterNullPiece = (piece) => {
+  return !(piece === undefined || piece.constructor.name === 'NullPiece')
 }
 
 const allTypes = [

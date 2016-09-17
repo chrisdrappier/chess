@@ -12,7 +12,11 @@ class SpaceComponent extends Component {
   get column () { return this.space.column }
 
   get pieceComponent () {
-    return <Piece piece={this.piece} />
+    if (this.piece.isNull === undefined) {
+      return ''
+    } else {
+      return <Piece piece={this.piece} />
+    }
   }
 
   get className () {
@@ -32,7 +36,7 @@ class SpaceComponent extends Component {
         id={this.index}
         onClick={() => { this.props.handleClick(this.space) }}>
         <div className="index"> {this.index} - {this.row} - {this.column}</div>
-        <div>{this.pieceComponent}</div>
+        {this.pieceComponent}
       </div>
     )
   }
