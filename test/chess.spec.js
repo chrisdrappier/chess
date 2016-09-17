@@ -25,7 +25,7 @@ const AssertValidMove = (chess, current, target) => {
   const newSpace = chess.board.spaces[target]
   describe(`move from ${current} to ${target}`, () => {
     it(`vacates ${current}`, () => {
-      expect(currentSpace.piece.constructor.name).to.equal('NullPiece')
+      expect(currentSpace.empty).to.equal(true)
     })
 
     it(`moves to ${target}`, () => {
@@ -137,7 +137,7 @@ describe('Chess', () => {
 
     describe('all pieces have a space', () => {
       var spaces = board.pieces.filter((piece) => {
-        return piece.constructor.name !== 'NullPiece'
+        return !piece.isNull
       })
       it('is 32', () => {
         expect(spaces.length).to.equal(32)

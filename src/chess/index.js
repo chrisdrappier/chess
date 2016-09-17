@@ -12,6 +12,7 @@ class Chess {
     if (selectedSpace) {
       this.move(selectedSpace.index, space.index)
       this.board.selectedSpace = null
+    } else if (space.empty) {
     } else {
       this.board.selectedSpace = space
     }
@@ -40,7 +41,7 @@ class Board {
   get pieces () {
     return this.spaces.map((space) => {
       return space.piece
-    }).concat(this.captures).filter(filterNullPiece)
+    }).concat(this.captures).filter(piece => !piece.isNull)
   }
 
   get selectedPiece () {
@@ -102,9 +103,12 @@ class Space {
     this.piece = piece
   }
 
+  get diagonalRight () { return this.row + this.column }
+  get diagonalLeft () { return this.row - this.column }
   get color () { return Math.abs((this.row - this.column) % 2) ? 'dark' : 'light' }
   get row () { return parseInt(this.index / 8) }
   get column () { return (this.index % 8) }
+  get empty () { return this.piece.isNull }
 }
 
 class NullPiece {
@@ -112,6 +116,8 @@ class NullPiece {
   get render () { return '' }
   get type () { return new Type() }
   get valueOf () { return false }
+  get isNull () { return true }
+
   validMove (n, n2) {
     return false
   }
@@ -137,7 +143,9 @@ class Piece {
     this.type = type
     this.index = this.color === 'white' ? index + type.whiteOffset : index
   }
+
   get render () { return this.type.render }
+  get isNull () { return false }
 
   validMove (currentSpace, newSpace) {
     return this.type.validMove(currentSpace, newSpace, this.colorClass)
@@ -147,10 +155,6 @@ class Piece {
     return type.defaults.map((index) => {
       return new Piece(index, type, color)
     })
-  }
-
-  get isNull () {
-    return !filterNullPiece(this)
   }
 }
 
@@ -175,10 +179,19 @@ class Pawn extends Type {
 class Rook extends Type {
   get defaults () { return [0, 7] }
   get render () { return '♜' }
+
+  validMove (currentSpace, newSpace, color) {
+    const sameColumn = currentSpace.column === newSpace.column && currentSpace.row !== newSpace.row
+    const sameRow = currentSpace.row === newSpace.row && currentSpace.column !== newSpace.column
+    return (sameColumn || sameRow)
+  }
 }
 class Bishop extends Type {
   get defaults () { return [5, 2] }
   get render () { return '♝' }
+  validMove (currentSpace, newSpace, color) {
+    return (currentSpace.diagonalRight === newSpace.diagonalRight || currentSpace.diagonalLeft === newSpace.diagonalLeft)
+  }
 }
 class Knight extends Type {
   get defaults () { return [1, 6] }
@@ -191,10 +204,6 @@ class Queen extends Type {
 class King extends Type {
   get defaults () { return [4] }
   get render () { return '♚' }
-}
-
-const filterNullPiece = (piece) => {
-  return !(piece === undefined || piece.constructor.name === 'NullPiece')
 }
 
 const allTypes = [
@@ -238,4 +247,4 @@ const EmptyRows = () => {
   return Array.apply(null, Array(32))
 }
 export default Chess
-export {Chess, Move, Board, Piece, NullPiece, Space}
+export {Chess, Move, Board, Piece, Space}

@@ -5,7 +5,7 @@ class CapturesComponent extends Component {
   get captures () { return this.props.chess.captures }
   get captureComponents () {
     return this.captures.filter((piece) => {
-      return piece.constructor.name !== 'NullPiece'
+      return !piece.isNull
     }).map((capture, index) => {
       capture.captured = true
       return <Piece piece={capture} key={index} />

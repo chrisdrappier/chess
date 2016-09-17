@@ -12,7 +12,7 @@ class SpaceComponent extends Component {
   get column () { return this.space.column }
 
   get pieceComponent () {
-    if (this.piece.isNull === undefined) {
+    if (this.piece.isNull) {
       return ''
     } else {
       return <Piece piece={this.piece} />
