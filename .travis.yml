@@ -5,8 +5,6 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-  file_glob: true
-  file: '*.html *.js'
   on:
     branch: master
 before_deploy:
