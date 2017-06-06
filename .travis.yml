@@ -8,5 +8,7 @@ deploy:
   on:
     branch: master
 before_deploy:
-  - echo $TRAVIS_BUILD_DIR
-  - pwd
+  - mkdir gh-pages
+  - cp index.html gh-pages
+  - webpack ./index.js gh-pages/bundle.js
+  - cd gh-pages
