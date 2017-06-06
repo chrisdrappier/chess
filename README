@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/chrisdrappier/chess.svg?branch=master)](https://travis-ci.org/chrisdrappier/chess)
 This is a chess program written in javascript.
 
 Installation
