@@ -1,8 +1,11 @@
 ![Build Status](https://travis-ci.org/chrisdrappier/chess.svg?branch=master "Travis Build Status")
-This is a chess program written in javascript.
 
-Installation
-check out repository and open index.html
 
-ROADMAP
-The goal of this project is to create a light-weight, efficient chess program that can be used to play your friends
+# This is a chess program written in javascript.
+
+
+## Installation
+- `npm run build`
+- open index.html
+
+let's hope the build is much faster this time..
