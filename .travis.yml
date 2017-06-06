@@ -8,6 +8,5 @@ deploy:
   on:
     branch: master
 before_deploy:
-  - rm -rf $TRAVIS_BUILD_DIR/*
-  - cp index.html $TRAVIS_BUILD_DIR
-  - webpack ./index.js $TRAVIS_BUILD_DIR/bundle.js
+  - echo $TRAVIS_BUILD_DIR
+  - pwd
