@@ -12,3 +12,6 @@ before_deploy:
   - webpack ./index.js bundle.js
   - cp index.html bundle.js deploy/
   - cd deploy
+deploy:
+  file_glob: true
+  file: '*.html *.js'
