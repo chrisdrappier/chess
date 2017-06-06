@@ -7,8 +7,7 @@ deploy:
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
   on:
     branch: master
-before_deploy:
-- test $TRAVIS_TEST_RESULT = 0 \
-    && rm -rf $TRAVIS_BUILD_DIR/* \
-    && cp index.html $TRAVIS_BUILD_DIR \
-    && webpack ./index.js $TRAVIS_BUILD_DIR/bundle.js
+after_success:
+  - rm -rf $TRAVIS_BUILD_DIR/*
+  - cp index.html $TRAVIS_BUILD_DIR
+  - webpack ./index.js $TRAVIS_BUILD_DIR/bundle.js
