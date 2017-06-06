@@ -9,6 +9,6 @@ deploy:
     branch: master
 before_deploy:
   - mkdir gh-pages
-  - cp index.html gh-pages
-  - webpack ./index.js gh-pages/bundle.js
+  - webpack ./index.js bundle.js
+  - cp index.html bundle.js gh-pages/
   - cd gh-pages
