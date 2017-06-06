@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "mocha test/react/app/*.spec.js test/*.spec.js test/react/*.spec.js ",
+    "test": "mocha -b test/react/app/*.spec.js test/*.spec.js test/react/*.spec.js ",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "build": "rm bundle.js && touch bundle.js && webpack ./index.js bundle.js",
     "deploy": "cp index.html bundle.js gh-pages/ && cd gh-pages && git add bundle.js index.html && git commit -m \"deploy\" && cd -"
