@@ -1,2 +1,2 @@
--w test/helpers/browser.js
+ test/helpers/browser.js
 --require ignore-styles
