@@ -1,17 +1,17 @@
-#board {
+#container #board {
 	height: 450px;
 	width: 450px;
 	float: left;
 }
 
-#captures {
+#container #captures {
 	border: 1px solid black;
 	height: 450px;
 	width: 200px;
 	float: left;
 }
 
-.space {
+#container .space {
 	height: 50px;
 	width: 50px;
 	border: 1px solid black;
@@ -19,19 +19,19 @@
 	position: relative;
 }
 
-.piece {
+#container .piece {
 	font-size: 35px;
 	height: 50px;
 	width: 50px;
 	text-align: center;
 }
 
-.index {
+#container .index {
 	font-size: 10px;
 	position: absolute;
 }
 
-.white {
+#container .white {
 	color: white;
 	text-shadow:
     -1px -1px 0 #000,
@@ -40,22 +40,22 @@
     1px 1px 0 #000;
 }
 
-.black {
+#container .black {
 	color: black;
 }
 
-.dark {
+#container .dark {
 	background-color : #996d54;
 }
 
-.light {
+#container .light {
 	background-color : #F1D4B2;
 }
 
-.selected {
+#container .selected {
 	background-color : red;
 }
 
-.available {
+#container .available {
 	background-color: #9ddbea;
 }
